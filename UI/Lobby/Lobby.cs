@@ -7,6 +7,8 @@ public partial class Lobby : Control
 	[Export] private PackedScene _playerEntryScene;
 	[Export] private VBoxContainer _teamAContainer;
 	[Export] private VBoxContainer _teamBContainer;
+	[Export] private Control _teamANoPlayerRow;
+	[Export] private Control _teamBNoPlayerRow;
 	[Export] private Button _readyButton;
 	[Export] private Label _matchStartLabel;
 
@@ -177,8 +179,14 @@ public partial class Lobby : Control
 	[Rpc(MultiplayerApi.RpcMode.Authority, CallLocal = true)]
 	private void UpdateClientUI(string jsonState)
 	{
-		foreach (Node child in _teamAContainer.GetChildren()) child.QueueFree();
-		foreach (Node child in _teamBContainer.GetChildren()) child.QueueFree();
+		foreach (Node child in _teamAContainer.GetChildren())
+		{
+			if (child != _teamANoPlayerRow) child.QueueFree();
+		}
+		foreach (Node child in _teamBContainer.GetChildren())
+		{
+			if (child != _teamBNoPlayerRow) child.QueueFree();
+		}
 
 		Json json = new Json();
 		json.Parse(jsonState);
@@ -215,6 +223,9 @@ public partial class Lobby : Control
 				teamBIndex++;
 			}
 		}
+
+		if (_teamANoPlayerRow != null) _teamANoPlayerRow.Visible = (teamAIndex == 0);
+		if (_teamBNoPlayerRow != null) _teamBNoPlayerRow.Visible = (teamBIndex == 0);
 	}
 	
 	[Rpc(MultiplayerApi.RpcMode.AnyPeer, CallLocal = true)]
