@@ -6,6 +6,8 @@ public partial class PlayerController : CharacterBody3D
 	[Export] private Node _movementComponent;
 	[Export] private Label3D _nameBillboard;
 	[Export] private Node3D _playerBody;
+	[Export] private BaseWeapon _equippedWeapon;
+	[Export] private CanvasLayer _crosshair;
 
 	public override void _EnterTree()
 	{
@@ -32,16 +34,36 @@ public partial class PlayerController : CharacterBody3D
 		if (!IsMultiplayerAuthority())
 		{
 			_camera.Current = false;
+			if (_crosshair != null) _crosshair.Visible = false;
 		}
 		else
 		{
 			_camera.Current = true;
 			Input.MouseMode = Input.MouseModeEnum.Captured;
 			_nameBillboard.Visible = false;
+			
+			if (_crosshair != null) _crosshair.Visible = true;
 
 			if (_playerBody != null)
 			{
 				SetShadowsOnlyRecursively(_playerBody);
+			}
+		}
+	}
+	
+	public override void _Process(double delta)
+	{
+		if (!IsMultiplayerAuthority()) return;
+
+		if (Input.MouseMode == Input.MouseModeEnum.Captured && _equippedWeapon != null)
+		{
+			bool wantsToShoot = _equippedWeapon.CurrentFireMode == BaseWeapon.FireModeType.Auto 
+				? Input.IsActionPressed(InputMapKeys.Shoot) 
+				: Input.IsActionJustPressed(InputMapKeys.Shoot);
+
+			if (wantsToShoot)
+			{
+				_equippedWeapon.AttemptShoot();
 			}
 		}
 	}
@@ -62,15 +84,30 @@ public partial class PlayerController : CharacterBody3D
 				Input.MouseMode = Input.MouseModeEnum.Captured;
 				EventBus.OnPauseMenuToggled?.Invoke(false);
 			}
+			return;
 		}
 
-		if (Input.IsActionJustPressed(InputMapKeys.Shoot))
+		if (Input.MouseMode == Input.MouseModeEnum.Captured && _equippedWeapon != null)
 		{
-			if (Input.MouseMode == Input.MouseModeEnum.Visible)
+			if (Input.IsActionJustPressed(InputMapKeys.ToggleFireMode))
 			{
-				Input.MouseMode = Input.MouseModeEnum.Captured;
-				EventBus.OnPauseMenuToggled?.Invoke(false);
+				_equippedWeapon.ToggleFireMode();
 			}
+
+			if (Input.IsActionJustPressed(InputMapKeys.Reload))
+			{
+				_equippedWeapon.AttemptReload();
+			}
+
+			if (Input.IsActionJustPressed(InputMapKeys.Aim))
+				_equippedWeapon.ToggleAim(true);
+			else if (Input.IsActionJustReleased(InputMapKeys.Aim))
+				_equippedWeapon.ToggleAim(false);
+		}
+		else if (Input.IsActionJustPressed(InputMapKeys.Shoot))
+		{
+			Input.MouseMode = Input.MouseModeEnum.Captured;
+			EventBus.OnPauseMenuToggled?.Invoke(false);
 		}
 	}
 	

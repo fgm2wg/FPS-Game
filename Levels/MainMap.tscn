@@ -1,9 +1,12 @@
 [gd_scene format=3 uid="uid://dxt0ffo5lps54"]
 
 [ext_resource type="Script" uid="uid://j08htyw704lb" path="res://Levels/MainMap.cs" id="1_k2731"]
-[ext_resource type="PackedScene" uid="uid://bqxv3umdhq1e0" path="res://Entities/Player.tscn" id="2_edq0r"]
+[ext_resource type="PackedScene" uid="uid://bqxv3umdhq1e0" path="res://Entities/Players/Player.tscn" id="2_edq0r"]
 [ext_resource type="PackedScene" uid="uid://brepdy3wjbdg0" path="res://UI/PauseMenu/PauseMenu.tscn" id="3_yckqg"]
 [ext_resource type="PackedScene" uid="uid://dduyc0q4o7llt" path="res://UI/FPSOverlay/FPSOverlay.tscn" id="4_rryg2"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rryg2"]
+albedo_color = Color(2.0455569e-07, 0.3480443, 5.7756904e-07, 1)
 
 [node name="MainMap" type="Node3D" unique_id=427450590 node_paths=PackedStringArray("_playersContainer")]
 script = ExtResource("1_k2731")
@@ -13,6 +16,7 @@ _playerScene = ExtResource("2_edq0r")
 [node name="CSGBox3D" type="CSGBox3D" parent="." unique_id=1450248325]
 transform = Transform3D(50, 0, 0, 0, 1, 0, 0, 0, 50, 0, 0, 0)
 use_collision = true
+material = SubResource("StandardMaterial3D_rryg2")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=2130551389]
 transform = Transform3D(0.70710677, -0.49999997, 0.49999997, 0, 0.70710677, 0.70710677, -0.70710677, -0.49999997, 0.49999997, 0, 0, 0)

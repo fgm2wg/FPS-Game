@@ -1,0 +1,9 @@
+[gd_scene format=3 uid="uid://bigynjo84xxm4"]
+
+[ext_resource type="Script" uid="uid://cfnbrphs302lg" path="res://UI/DamageIndicator/DamageIndicator.cs" id="1_72vr4"]
+
+[node name="DamageIndicator" type="Label3D" unique_id=577920348]
+billboard = 1
+modulate = Color(1, 0, 0, 1)
+text = "-50"
+script = ExtResource("1_72vr4")

@@ -5,6 +5,11 @@ public static class InputMapKeys
 	public const string MoveLeft = "move_left";
 	public const string MoveRight = "move_right";
 	public const string Jump = "jump";
-	public const string Pause = "pause";
+	
 	public const string Shoot = "shoot";
+	public const string Reload = "reload";
+	public const string Aim = "aim";
+	public const string ToggleFireMode = "toggle_fire_mode";
+	
+	public const string Pause = "pause";
 }
