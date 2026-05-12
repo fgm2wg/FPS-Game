@@ -14,11 +14,19 @@ public partial class PlayerController : CharacterBody3D
 
 	public override void _Ready()
 	{
-		long myId = int.Parse(Name);
+		long myId = long.Parse(Name);
 
 		if (GameManager.Players.ContainsKey(myId))
 		{
-			_nameBillboard.Text = GameManager.Players[myId].Name;
+			PlayerData data = GameManager.Players[myId];
+			_nameBillboard.Text = data.Name;
+
+			if (_playerBody is MeshInstance3D bodyMesh)
+			{
+				StandardMaterial3D teamMaterial = new StandardMaterial3D();
+				teamMaterial.AlbedoColor = data.Team == 0 ? Colors.Blue : Colors.Red;
+				bodyMesh.MaterialOverride = teamMaterial;
+			}
 		}
 
 		if (!IsMultiplayerAuthority())
@@ -30,7 +38,7 @@ public partial class PlayerController : CharacterBody3D
 			_camera.Current = true;
 			Input.MouseMode = Input.MouseModeEnum.Captured;
 			_nameBillboard.Visible = false;
-			
+
 			if (_playerBody != null)
 			{
 				SetShadowsOnlyRecursively(_playerBody);

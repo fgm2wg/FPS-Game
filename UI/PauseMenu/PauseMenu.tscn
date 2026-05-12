@@ -7,6 +7,7 @@ font_size = 48
 outline_size = 2
 
 [node name="PauseMenu" type="CanvasLayer" unique_id=2104626748 node_paths=PackedStringArray("_quitButton")]
+layer = 10
 script = ExtResource("1_3oydc")
 _quitButton = NodePath("PanelContainer/MarginContainer/ExitButton")
 
