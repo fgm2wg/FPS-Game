@@ -14,6 +14,10 @@ public partial class MultiplayerManager : Node
 
 		Multiplayer.PeerConnected += OnPeerConnected;
 		Multiplayer.PeerDisconnected += OnPeerDisconnected;
+
+		Multiplayer.ConnectedToServer += OnConnectedToServer;
+		Multiplayer.ConnectionFailed += OnConnectionFailed;
+		Multiplayer.ServerDisconnected += OnServerDisconnected;
 	}
 
 	public override void _ExitTree()
@@ -51,18 +55,30 @@ public partial class MultiplayerManager : Node
 		}
 
 		Multiplayer.MultiplayerPeer = _peer;
-		GD.Print($"Joining {ip}:{port}...");
+		GD.Print($"Attempting to join {ip}:{port}...");
+	}
+
+	private void OnConnectedToServer()
+	{
+		GD.Print("Successfully connected to the server!");
+		LoadLobbyScene();
+	}
+
+	private void OnConnectionFailed()
+	{
+		GD.PrintErr("Failed to connect to the server.");
+	}
+
+	private void OnServerDisconnected()
+	{
+		GD.Print("Disconnected from the server.");
+		GetTree().ChangeSceneToFile("res://UI/MainMenu/MainMenu.tscn");
 	}
 
 	private void OnPeerConnected(long id)
 	{
 		GD.Print($"Player {id} connected!");
 		EventBus.OnPlayerConnected?.Invoke(id);
-		
-		if (Multiplayer.IsServer())
-		{
-			LoadLobbyScene(); 
-		}
 	}
 
 	private void OnPeerDisconnected(long id)

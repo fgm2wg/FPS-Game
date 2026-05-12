@@ -1,0 +1,44 @@
+[gd_scene format=3 uid="uid://bqxv3umdhq1e0"]
+
+[ext_resource type="Script" uid="uid://8j8bxuej4k8s" path="res://Entities/PlayerController.cs" id="1_41wu2"]
+[ext_resource type="Script" uid="uid://qw0nnmxtjegp" path="res://Entities/Components/LookComponent.cs" id="2_0gd87"]
+[ext_resource type="Script" uid="uid://cgn6pwnu22xc6" path="res://Entities/Components/MovementComponent.cs" id="2_1iada"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_mq5ly"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0gd87"]
+albedo_color = Color(0, 0, 1, 1)
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_c7jvw"]
+material = SubResource("StandardMaterial3D_0gd87")
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_41wu2"]
+properties/0/path = NodePath(".:position")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath(".:rotation")
+properties/1/spawn = true
+properties/1/replication_mode = 1
+
+[node name="Player" type="CharacterBody3D" unique_id=1560874725 node_paths=PackedStringArray("_camera", "_movementComponent")]
+script = ExtResource("1_41wu2")
+_camera = NodePath("CameraPivot/Camera3D")
+_movementComponent = NodePath("MovementComponent")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=2122354048]
+shape = SubResource("CapsuleShape3D_mq5ly")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1554529065]
+mesh = SubResource("CapsuleMesh_c7jvw")
+
+[node name="CameraPivot" type="Node3D" parent="." unique_id=1421329178]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+script = ExtResource("2_0gd87")
+
+[node name="Camera3D" type="Camera3D" parent="CameraPivot" unique_id=1722341565]
+
+[node name="MovementComponent" type="Node" parent="." unique_id=1842697382]
+script = ExtResource("2_1iada")
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="." unique_id=440234245]
+replication_config = SubResource("SceneReplicationConfig_41wu2")
