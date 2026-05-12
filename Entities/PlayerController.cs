@@ -50,4 +50,16 @@ public partial class PlayerController : CharacterBody3D
 			}
 		}
 	}
+	
+	public override void _Notification(int what)
+	{
+		if (what == MainLoop.NotificationApplicationFocusOut)
+		{
+			if (IsMultiplayerAuthority() && Input.MouseMode == Input.MouseModeEnum.Captured)
+			{
+				Input.MouseMode = Input.MouseModeEnum.Visible;
+				EventBus.OnPauseMenuToggled?.Invoke(true);
+			}
+		}
+	}
 }

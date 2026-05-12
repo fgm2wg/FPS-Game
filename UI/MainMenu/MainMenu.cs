@@ -10,6 +10,8 @@ public partial class MainMenu : Control
 
 	public override void _Ready()
 	{
+		Input.MouseMode = Input.MouseModeEnum.Visible;
+		
 		_addressInput.Text = "127.0.0.1:1234";
 		_maxPlayersInput.Text = "12";
 

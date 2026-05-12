@@ -64,6 +64,17 @@ text = "Max Players:"
 layout_mode = 2
 placeholder_text = "12"
 
+[node name="PlayerNameVBox" type="VBoxContainer" parent="MarginContainer/VBoxContainer/InputsVBox" unique_id=1848440364]
+layout_mode = 2
+theme_override_constants/separation = 5
+
+[node name="PlayerNameLabel" type="Label" parent="MarginContainer/VBoxContainer/InputsVBox/PlayerNameVBox" unique_id=1010455320]
+layout_mode = 2
+text = "Player Name:"
+
+[node name="PlayerNameInput" type="LineEdit" parent="MarginContainer/VBoxContainer/InputsVBox/PlayerNameVBox" unique_id=2077177552]
+layout_mode = 2
+
 [node name="ButtonsVBox" type="VBoxContainer" parent="MarginContainer/VBoxContainer" unique_id=1954157741]
 layout_mode = 2
 theme_override_constants/separation = 10
