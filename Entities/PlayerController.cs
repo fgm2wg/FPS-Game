@@ -4,6 +4,7 @@ public partial class PlayerController : CharacterBody3D
 {
 	[Export] private Camera3D _camera;
 	[Export] private Node _movementComponent;
+	[Export] private Label3D _nameBillboard;
 
 	public override void _EnterTree()
 	{
@@ -12,6 +13,13 @@ public partial class PlayerController : CharacterBody3D
 
 	public override void _Ready()
 	{
+		long myId = int.Parse(Name);
+
+		if (GameManager.Players.ContainsKey(myId))
+		{
+			_nameBillboard.Text = GameManager.Players[myId].Name;
+		}
+
 		if (!IsMultiplayerAuthority())
 		{
 			_camera.Current = false;
@@ -20,6 +28,8 @@ public partial class PlayerController : CharacterBody3D
 		{
 			_camera.Current = true;
 			Input.MouseMode = Input.MouseModeEnum.Captured;
+			
+			_nameBillboard.Visible = false; 
 		}
 	}
 

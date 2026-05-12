@@ -20,10 +20,11 @@ properties/1/path = NodePath(".:rotation")
 properties/1/spawn = true
 properties/1/replication_mode = 1
 
-[node name="Player" type="CharacterBody3D" unique_id=1560874725 node_paths=PackedStringArray("_camera", "_movementComponent")]
+[node name="Player" type="CharacterBody3D" unique_id=1560874725 node_paths=PackedStringArray("_camera", "_movementComponent", "_nameBillboard")]
 script = ExtResource("1_41wu2")
 _camera = NodePath("CameraPivot/Camera3D")
 _movementComponent = NodePath("MovementComponent")
+_nameBillboard = NodePath("PlayerNameLabel")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=2122354048]
 shape = SubResource("CapsuleShape3D_mq5ly")
@@ -36,6 +37,11 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 script = ExtResource("2_0gd87")
 
 [node name="Camera3D" type="Camera3D" parent="CameraPivot" unique_id=1722341565]
+
+[node name="PlayerNameLabel" type="Label3D" parent="." unique_id=2038667094]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1, 0)
+billboard = 1
+text = "Player"
 
 [node name="MovementComponent" type="Node" parent="." unique_id=1842697382]
 script = ExtResource("2_1iada")

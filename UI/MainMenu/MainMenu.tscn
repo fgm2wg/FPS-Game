@@ -8,7 +8,7 @@ font_color = Color(1, 1, 0, 1)
 outline_size = 2
 outline_color = Color(1, 1, 0, 1)
 
-[node name="MainMenu" type="PanelContainer" unique_id=1978301999 node_paths=PackedStringArray("_addressInput", "_maxPlayersInput", "_hostButton", "_joinButton")]
+[node name="MainMenu" type="PanelContainer" unique_id=1978301999 node_paths=PackedStringArray("_addressInput", "_maxPlayersInput", "_hostButton", "_joinButton", "_nameInput")]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -19,6 +19,7 @@ _addressInput = NodePath("MarginContainer/VBoxContainer/InputsVBox/AddressVBox/A
 _maxPlayersInput = NodePath("MarginContainer/VBoxContainer/InputsVBox/MaxPlayersVBox/MaxPlayersInput")
 _hostButton = NodePath("MarginContainer/VBoxContainer/ButtonsVBox/HostButton")
 _joinButton = NodePath("MarginContainer/VBoxContainer/ButtonsVBox/JoinButton")
+_nameInput = NodePath("MarginContainer/VBoxContainer/InputsVBox/PlayerNameVBox/PlayerNameInput")
 
 [node name="MarginContainer" type="MarginContainer" parent="." unique_id=2086364192]
 layout_mode = 2

@@ -10,7 +10,6 @@ public partial class Lobby : Control
 	[Export] private Button _readyButton;
 	[Export] private Label _matchStartLabel;
 
-	private Dictionary<long, PlayerData> _serverPlayers = new Dictionary<long, PlayerData>();
 	private bool _isLocalPlayerReady = false;
 	private double _countdownTime = 5.0;
 	private bool _isCountdownActive = false;
@@ -19,7 +18,7 @@ public partial class Lobby : Control
 	{
 		_readyButton.Pressed += OnReadyButtonPressed;
 		
-		if (_matchStartLabel != null) 
+		if (_matchStartLabel != null)
 			_matchStartLabel.Visible = false;
 
 		if (Multiplayer.IsServer())
@@ -27,6 +26,10 @@ public partial class Lobby : Control
 			Multiplayer.PeerConnected += OnPeerConnected;
 			Multiplayer.PeerDisconnected += OnPeerDisconnected;
 			AddPlayerToServerList(Multiplayer.GetUniqueId());
+		}
+		else
+		{
+			RpcId(1, MethodName.RegisterPlayerName, GameManager.LocalPlayerName);
 		}
 	}
 
@@ -59,9 +62,9 @@ public partial class Lobby : Control
 
 	private void OnPeerDisconnected(long id)
 	{
-		if (_serverPlayers.ContainsKey(id))
+		if (GameManager.Players.ContainsKey(id))
 		{
-			_serverPlayers.Remove(id);
+			GameManager.Players.Remove(id);
 			BroadcastLobbyState();
 			CheckAllPlayersReady(); 
 		}
@@ -69,15 +72,18 @@ public partial class Lobby : Control
 
 	private void AddPlayerToServerList(long id)
 	{
-		int teamACount = _serverPlayers.Values.Count(p => p.Team == 0);
-		int teamBCount = _serverPlayers.Values.Count(p => p.Team == 1);
-
+		int teamACount = GameManager.Players.Values.Count(p => p.Team == 0);
+		int teamBCount = GameManager.Players.Values.Count(p => p.Team == 1);
 		int assignedTeam = (teamACount <= teamBCount) ? 0 : 1;
 
-		_serverPlayers[id] = new PlayerData
+		string finalName = id == 1 
+			? (string.IsNullOrWhiteSpace(GameManager.LocalPlayerName) ? $"Player {id}" : GameManager.LocalPlayerName) 
+			: $"Player {id}";
+
+		GameManager.Players[id] = new PlayerData
 		{
 			Id = id,
-			Name = $"Player {id}",
+			Name = finalName,
 			Team = assignedTeam,
 			IsReady = false
 		};
@@ -92,9 +98,9 @@ public partial class Lobby : Control
 		if (!Multiplayer.IsServer()) return;
 
 		long senderId = Multiplayer.GetRemoteSenderId();
-		if (_serverPlayers.ContainsKey(senderId))
+		if (GameManager.Players.ContainsKey(senderId))
 		{
-			_serverPlayers[senderId].IsReady = isReady;
+			GameManager.Players[senderId].IsReady = isReady;
 			BroadcastLobbyState();
 			CheckAllPlayersReady(); 
 		}
@@ -104,7 +110,7 @@ public partial class Lobby : Control
 	{
 		var godotArray = new Godot.Collections.Array<Godot.Collections.Dictionary>();
 
-		foreach (var p in _serverPlayers.Values)
+		foreach (var p in GameManager.Players.Values)
 		{
 			var playerDict = new Godot.Collections.Dictionary
 			{
@@ -122,7 +128,7 @@ public partial class Lobby : Control
 
 	private void CheckAllPlayersReady()
 	{
-		bool allReady = _serverPlayers.Count > 0 && _serverPlayers.Values.All(p => p.IsReady);
+		bool allReady = GameManager.Players.Count > 0 && GameManager.Players.Values.All(p => p.IsReady);
 
 		if (allReady)
 		{
@@ -181,11 +187,16 @@ public partial class Lobby : Control
 		int teamAIndex = 0;
 		int teamBIndex = 0;
 
+		GameManager.Players.Clear();
+
 		foreach (var p in parsedData)
 		{
+			long pId = p["Id"].AsInt64();
 			string pName = p["Name"].AsString();
 			int pTeam = p["Team"].AsInt32();
 			bool pReady = p["IsReady"].AsBool();
+
+			GameManager.Players[pId] = new PlayerData { Id = pId, Name = pName, Team = pTeam, IsReady = pReady };
 
 			PlayerLobbyEntry entry = _playerEntryScene.Instantiate<PlayerLobbyEntry>();
 
@@ -203,6 +214,21 @@ public partial class Lobby : Control
 				_teamBContainer.AddChild(entry);
 				teamBIndex++;
 			}
+		}
+	}
+	
+	[Rpc(MultiplayerApi.RpcMode.AnyPeer, CallLocal = true)]
+	private void RegisterPlayerName(string chosenName)
+	{
+		if (!Multiplayer.IsServer()) return;
+
+		long senderId = Multiplayer.GetRemoteSenderId();
+		if (GameManager.Players.ContainsKey(senderId))
+		{
+			string finalName = string.IsNullOrWhiteSpace(chosenName) ? $"Player {senderId}" : chosenName;
+			
+			GameManager.Players[senderId].Name = finalName;
+			BroadcastLobbyState();
 		}
 	}
 }
