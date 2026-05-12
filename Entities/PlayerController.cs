@@ -5,6 +5,7 @@ public partial class PlayerController : CharacterBody3D
 	[Export] private Camera3D _camera;
 	[Export] private Node _movementComponent;
 	[Export] private Label3D _nameBillboard;
+	[Export] private Node3D _playerBody;
 
 	public override void _EnterTree()
 	{
@@ -28,8 +29,12 @@ public partial class PlayerController : CharacterBody3D
 		{
 			_camera.Current = true;
 			Input.MouseMode = Input.MouseModeEnum.Captured;
+			_nameBillboard.Visible = false;
 			
-			_nameBillboard.Visible = false; 
+			if (_playerBody != null)
+			{
+				SetShadowsOnlyRecursively(_playerBody);
+			}
 		}
 	}
 
@@ -70,6 +75,19 @@ public partial class PlayerController : CharacterBody3D
 				Input.MouseMode = Input.MouseModeEnum.Visible;
 				EventBus.OnPauseMenuToggled?.Invoke(true);
 			}
+		}
+	}
+	
+	private void SetShadowsOnlyRecursively(Node node)
+	{
+		if (node is GeometryInstance3D mesh)
+		{
+			mesh.CastShadow = GeometryInstance3D.ShadowCastingSetting.ShadowsOnly;
+		}
+
+		foreach (Node child in node.GetChildren())
+		{
+			SetShadowsOnlyRecursively(child);
 		}
 	}
 }

@@ -12,6 +12,34 @@ albedo_color = Color(0, 0, 1, 1)
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_c7jvw"]
 material = SubResource("StandardMaterial3D_0gd87")
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_c7jvw"]
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_0gd87"]
+material = SubResource("StandardMaterial3D_c7jvw")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2a4id"]
+albedo_color = Color(0, 0, 0, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_drum4"]
+material = SubResource("StandardMaterial3D_2a4id")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_drum4"]
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_io258"]
+material = SubResource("StandardMaterial3D_drum4")
+
+[sub_resource type="ORMMaterial3D" id="ORMMaterial3D_0gd87"]
+albedo_color = Color(1, 0.654902, 1, 1)
+
+[sub_resource type="TorusMesh" id="TorusMesh_c7jvw"]
+material = SubResource("ORMMaterial3D_0gd87")
+outer_radius = 0.35
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_io258"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_w6hej"]
+material = SubResource("StandardMaterial3D_io258")
+
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_41wu2"]
 properties/0/path = NodePath(".:position")
 properties/0/spawn = true
@@ -20,17 +48,50 @@ properties/1/path = NodePath(".:rotation")
 properties/1/spawn = true
 properties/1/replication_mode = 1
 
-[node name="Player" type="CharacterBody3D" unique_id=1560874725 node_paths=PackedStringArray("_camera", "_movementComponent", "_nameBillboard")]
+[node name="Player" type="CharacterBody3D" unique_id=1560874725 node_paths=PackedStringArray("_camera", "_movementComponent", "_nameBillboard", "_playerBody")]
 script = ExtResource("1_41wu2")
 _camera = NodePath("CameraPivot/Camera3D")
 _movementComponent = NodePath("MovementComponent")
 _nameBillboard = NodePath("PlayerNameLabel")
+_playerBody = NodePath("Body")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=2122354048]
 shape = SubResource("CapsuleShape3D_mq5ly")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1554529065]
+[node name="Body" type="MeshInstance3D" parent="." unique_id=1554529065]
 mesh = SubResource("CapsuleMesh_c7jvw")
+
+[node name="Eye" type="MeshInstance3D" parent="Body" unique_id=1669641029]
+transform = Transform3D(0.25, 0, 0, 0, -4.3711387e-10, -0.25, 0, 0.01, -1.0927847e-08, 0.15, 0.5, -0.5)
+mesh = SubResource("CylinderMesh_0gd87")
+
+[node name="BlackPart" type="MeshInstance3D" parent="Body/Eye" unique_id=1240857766]
+transform = Transform3D(0.75, 0, 0, 0, 1, 0, 0, 0, 0.75, 0, -0.1, 0)
+mesh = SubResource("CylinderMesh_drum4")
+
+[node name="WhitePart" type="MeshInstance3D" parent="Body/Eye" unique_id=1852117428]
+transform = Transform3D(0.25, 0, 0, 0, 1, 0, 0, 0, 0.25, -0.15, -0.15, -0.1)
+mesh = SubResource("CylinderMesh_io258")
+
+[node name="Eye2" type="MeshInstance3D" parent="Body" unique_id=1897784256]
+transform = Transform3D(0.25, 0, 0, 0, -4.3711387e-10, -0.25, 0, 0.01, -1.0927847e-08, -0.15, 0.5, -0.5)
+mesh = SubResource("CylinderMesh_0gd87")
+
+[node name="BlackPart" type="MeshInstance3D" parent="Body/Eye2" unique_id=2140975766]
+transform = Transform3D(0.75, 0, 0, 0, 1, 0, 0, 0, 0.75, 0, -0.1, 0)
+mesh = SubResource("CylinderMesh_drum4")
+
+[node name="WhitePart" type="MeshInstance3D" parent="Body/Eye2" unique_id=717862265]
+transform = Transform3D(0.25, 0, 0, 0, 1, 0, 0, 0, 0.25, -0.15, -0.15, -0.1)
+mesh = SubResource("CylinderMesh_io258")
+
+[node name="Mouth" type="MeshInstance3D" parent="Body" unique_id=320615503]
+transform = Transform3D(0.3, 0, 0, 0, -8.742278e-09, -0.25, 0, 0.2, -1.0927847e-08, 0, 0.25, -0.5)
+mesh = SubResource("TorusMesh_c7jvw")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Body/Mouth" unique_id=309130444]
+transform = Transform3D(0.25, 0, 0, 0, 0.1, 0, 0, 0, 0.25, 0, 0, -0.25)
+mesh = SubResource("BoxMesh_w6hej")
 
 [node name="CameraPivot" type="Node3D" parent="." unique_id=1421329178]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
