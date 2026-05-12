@@ -72,6 +72,7 @@ public partial class MultiplayerManager : Node
 	private void OnServerDisconnected()
 	{
 		GD.Print("Disconnected from the server.");
+		Multiplayer.MultiplayerPeer = null;
 		GetTree().ChangeSceneToFile("res://UI/MainMenu/MainMenu.tscn");
 	}
 
