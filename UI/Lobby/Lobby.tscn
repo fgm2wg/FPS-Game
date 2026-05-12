@@ -1,0 +1,163 @@
+[gd_scene format=3 uid="uid://c41kswx7rp2oi"]
+
+[ext_resource type="Script" uid="uid://fp2ud8h0v85p" path="res://UI/Lobby/Lobby.cs" id="1_kvxhh"]
+[ext_resource type="PackedScene" uid="uid://cny6fh2kvstpn" path="res://UI/Lobby/PlayerLobbyEntry.tscn" id="2_gmay1"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_kvwhn"]
+font_size = 32
+outline_size = 2
+
+[sub_resource type="LabelSettings" id="LabelSettings_kvxhh"]
+font_size = 24
+outline_size = 1
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kvwhn"]
+content_margin_left = 10.0
+content_margin_top = 5.0
+content_margin_right = 10.0
+content_margin_bottom = 5.0
+bg_color = Color(0.3372549, 0.3372549, 0.3372549, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+corner_detail = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kvxhh"]
+content_margin_left = 10.0
+content_margin_top = 5.0
+content_margin_right = 10.0
+content_margin_bottom = 5.0
+bg_color = Color(0.3372549, 0.3372549, 0.3372549, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+corner_detail = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gmay1"]
+content_margin_left = 10.0
+content_margin_top = 5.0
+content_margin_right = 10.0
+content_margin_bottom = 5.0
+bg_color = Color(0.3372549, 0.3372549, 0.3372549, 0.47058824)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+corner_detail = 5
+
+[sub_resource type="LabelSettings" id="LabelSettings_gmay1"]
+font_size = 24
+
+[node name="Lobby" type="PanelContainer" unique_id=409785544 node_paths=PackedStringArray("_teamAContainer", "_teamBContainer", "_readyButton")]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_kvxhh")
+_playerEntryScene = ExtResource("2_gmay1")
+_teamAContainer = NodePath("MarginContainer/VBoxContainer/TeamsVBox/Team1VBox/PlayersVBox")
+_teamBContainer = NodePath("MarginContainer/VBoxContainer/TeamsVBox/Team2VBox/PlayersVBox")
+_readyButton = NodePath("MarginContainer/VBoxContainer/FooterRow/MarginContainer/ReadyButton")
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=565112788]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer" unique_id=1739693155]
+layout_mode = 2
+theme_override_constants/separation = 5
+
+[node name="HeaderRow" type="PanelContainer" parent="MarginContainer/VBoxContainer" unique_id=1622716683]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer/HeaderRow" unique_id=135372749]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="LobbyLabel" type="Label" parent="MarginContainer/VBoxContainer/HeaderRow/MarginContainer" unique_id=2094107527]
+layout_mode = 2
+text = "Match Lobby"
+label_settings = SubResource("LabelSettings_kvwhn")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TeamsVBox" type="VBoxContainer" parent="MarginContainer/VBoxContainer" unique_id=1348633363]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 5
+
+[node name="Team1VBox" type="VBoxContainer" parent="MarginContainer/VBoxContainer/TeamsVBox" unique_id=953969050]
+layout_mode = 2
+theme_override_constants/separation = 5
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer/TeamsVBox/Team1VBox" unique_id=1261672496]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 5
+
+[node name="Team1Label" type="Label" parent="MarginContainer/VBoxContainer/TeamsVBox/Team1VBox/MarginContainer" unique_id=457511634]
+layout_mode = 2
+text = "Team 1"
+label_settings = SubResource("LabelSettings_kvxhh")
+
+[node name="PlayersVBox" type="VBoxContainer" parent="MarginContainer/VBoxContainer/TeamsVBox/Team1VBox" unique_id=640649854]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="VSeparator" type="HSeparator" parent="MarginContainer/VBoxContainer/TeamsVBox" unique_id=444789146]
+layout_mode = 2
+
+[node name="Team2VBox" type="VBoxContainer" parent="MarginContainer/VBoxContainer/TeamsVBox" unique_id=753626693]
+layout_mode = 2
+theme_override_constants/separation = 5
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer/TeamsVBox/Team2VBox" unique_id=647005578]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 5
+
+[node name="Team2Label" type="Label" parent="MarginContainer/VBoxContainer/TeamsVBox/Team2VBox/MarginContainer" unique_id=87097811]
+layout_mode = 2
+text = "Team 2"
+label_settings = SubResource("LabelSettings_kvxhh")
+
+[node name="PlayersVBox" type="VBoxContainer" parent="MarginContainer/VBoxContainer/TeamsVBox/Team2VBox" unique_id=1827325870]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="FooterRow" type="PanelContainer" parent="MarginContainer/VBoxContainer" unique_id=662377170]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer/FooterRow" unique_id=1936608940]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="ReadyButton" type="Button" parent="MarginContainer/VBoxContainer/FooterRow/MarginContainer" unique_id=205449253]
+layout_mode = 2
+size_flags_horizontal = 4
+mouse_default_cursor_shape = 2
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxFlat_kvwhn")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_kvxhh")
+theme_override_styles/hover = SubResource("StyleBoxFlat_gmay1")
+text = "Ready"
+
+[node name="MatchStartLabel" type="Label" parent="MarginContainer/VBoxContainer/FooterRow/MarginContainer" unique_id=650662112]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 8
+text = "Match Starting in 5s..."
+label_settings = SubResource("LabelSettings_gmay1")
+vertical_alignment = 1

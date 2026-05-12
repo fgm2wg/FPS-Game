@@ -1,0 +1,40 @@
+[gd_scene format=3 uid="uid://cny6fh2kvstpn"]
+
+[ext_resource type="Script" uid="uid://b505tdlg4u7m2" path="res://UI/Lobby/PlayerLobbyEntry.cs" id="1_t1mr0"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kvwhn"]
+content_margin_left = 0.0
+content_margin_top = 0.0
+content_margin_right = 0.0
+content_margin_bottom = 0.0
+bg_color = Color(0.1, 0.1, 0.1, 0.6)
+corner_detail = 5
+
+[node name="PlayerLobbyEntry" type="PanelContainer" unique_id=2037661568 node_paths=PackedStringArray("_nameLabel", "_statusLabel")]
+theme_override_styles/panel = SubResource("StyleBoxFlat_kvwhn")
+script = ExtResource("1_t1mr0")
+_nameLabel = NodePath("MarginContainer/LabelsHBox/PlayerNameLabel")
+_statusLabel = NodePath("MarginContainer/LabelsHBox/StatusLabel")
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=1933085154]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 5
+
+[node name="LabelsHBox" type="HBoxContainer" parent="MarginContainer" unique_id=1341910997]
+layout_mode = 2
+
+[node name="PlayerNameLabel" type="Label" parent="MarginContainer/LabelsHBox" unique_id=1113021192]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Player 1"
+vertical_alignment = 1
+
+[node name="StatusLabel" type="Label" parent="MarginContainer/LabelsHBox" unique_id=1453179864]
+layout_mode = 2
+size_flags_horizontal = 8
+text = "Waiting..."
+horizontal_alignment = 2
+vertical_alignment = 1

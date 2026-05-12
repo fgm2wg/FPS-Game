@@ -1,0 +1,79 @@
+[gd_scene format=3 uid="uid://cqvvteic1gn76"]
+
+[ext_resource type="Script" uid="uid://d2p40stm146ur" path="res://UI/MainMenu/MainMenu.cs" id="1_8fkdr"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_8fkdr"]
+font_size = 49
+font_color = Color(1, 1, 0, 1)
+outline_size = 2
+outline_color = Color(1, 1, 0, 1)
+
+[node name="MainMenu" type="PanelContainer" unique_id=1978301999 node_paths=PackedStringArray("_addressInput", "_maxPlayersInput", "_hostButton", "_joinButton")]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_8fkdr")
+_addressInput = NodePath("MarginContainer/VBoxContainer/InputsVBox/AddressVBox/AddressInput")
+_maxPlayersInput = NodePath("MarginContainer/VBoxContainer/InputsVBox/MaxPlayersVBox/MaxPlayersInput")
+_hostButton = NodePath("MarginContainer/VBoxContainer/ButtonsVBox/HostButton")
+_joinButton = NodePath("MarginContainer/VBoxContainer/ButtonsVBox/JoinButton")
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=2086364192]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer" unique_id=1770603485]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_constants/separation = 15
+
+[node name="GameTitle" type="Label" parent="MarginContainer/VBoxContainer" unique_id=1885348697]
+layout_mode = 2
+text = "FPS GAME"
+label_settings = SubResource("LabelSettings_8fkdr")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="InputsVBox" type="VBoxContainer" parent="MarginContainer/VBoxContainer" unique_id=2082510263]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="AddressVBox" type="VBoxContainer" parent="MarginContainer/VBoxContainer/InputsVBox" unique_id=1705361437]
+layout_mode = 2
+theme_override_constants/separation = 5
+
+[node name="AddressLabel" type="Label" parent="MarginContainer/VBoxContainer/InputsVBox/AddressVBox" unique_id=299958104]
+layout_mode = 2
+text = "IP Address:"
+
+[node name="AddressInput" type="LineEdit" parent="MarginContainer/VBoxContainer/InputsVBox/AddressVBox" unique_id=289742802]
+layout_mode = 2
+placeholder_text = "127.0.0.1:1234"
+
+[node name="MaxPlayersVBox" type="VBoxContainer" parent="MarginContainer/VBoxContainer/InputsVBox" unique_id=520591147]
+layout_mode = 2
+theme_override_constants/separation = 5
+
+[node name="MaxPlayersLabel" type="Label" parent="MarginContainer/VBoxContainer/InputsVBox/MaxPlayersVBox" unique_id=1785100385]
+layout_mode = 2
+text = "Max Players:"
+
+[node name="MaxPlayersInput" type="LineEdit" parent="MarginContainer/VBoxContainer/InputsVBox/MaxPlayersVBox" unique_id=1938142217]
+layout_mode = 2
+placeholder_text = "12"
+
+[node name="ButtonsVBox" type="VBoxContainer" parent="MarginContainer/VBoxContainer" unique_id=1954157741]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="HostButton" type="Button" parent="MarginContainer/VBoxContainer/ButtonsVBox" unique_id=1891577499]
+layout_mode = 2
+mouse_default_cursor_shape = 2
+text = "Host Game"
+
+[node name="JoinButton" type="Button" parent="MarginContainer/VBoxContainer/ButtonsVBox" unique_id=1183379118]
+layout_mode = 2
+mouse_default_cursor_shape = 2
+text = "Join Game"
