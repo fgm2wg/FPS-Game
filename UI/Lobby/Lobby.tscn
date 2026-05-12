@@ -3,6 +3,22 @@
 [ext_resource type="Script" uid="uid://fp2ud8h0v85p" path="res://UI/Lobby/Lobby.cs" id="1_kvxhh"]
 [ext_resource type="PackedScene" uid="uid://cny6fh2kvstpn" path="res://UI/Lobby/PlayerLobbyEntry.tscn" id="2_gmay1"]
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_w20w5"]
+content_margin_left = 0.0
+content_margin_top = 0.0
+content_margin_right = 0.0
+content_margin_bottom = 0.0
+bg_color = Color(0.1, 0.1, 0.1, 0.6)
+corner_detail = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_81g6x"]
+content_margin_left = 0.0
+content_margin_top = 0.0
+content_margin_right = 0.0
+content_margin_bottom = 0.0
+bg_color = Color(0.1, 0.1, 0.1, 0.6)
+corner_detail = 5
+
 [sub_resource type="LabelSettings" id="LabelSettings_kvwhn"]
 font_size = 32
 outline_size = 2
@@ -10,6 +26,14 @@ outline_size = 2
 [sub_resource type="LabelSettings" id="LabelSettings_kvxhh"]
 font_size = 24
 outline_size = 1
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wfbhu"]
+content_margin_left = 0.0
+content_margin_top = 0.0
+content_margin_right = 0.0
+content_margin_bottom = 0.0
+bg_color = Color(0.1, 0.1, 0.1, 0.6)
+corner_detail = 5
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kvwhn"]
 content_margin_left = 10.0
@@ -50,17 +74,19 @@ corner_detail = 5
 [sub_resource type="LabelSettings" id="LabelSettings_gmay1"]
 font_size = 24
 
-[node name="Lobby" type="PanelContainer" unique_id=409785544 node_paths=PackedStringArray("_teamAContainer", "_teamBContainer", "_readyButton")]
+[node name="Lobby" type="PanelContainer" unique_id=409785544 node_paths=PackedStringArray("_teamAContainer", "_teamBContainer", "_readyButton", "_matchStartLabel")]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_w20w5")
 script = ExtResource("1_kvxhh")
 _playerEntryScene = ExtResource("2_gmay1")
 _teamAContainer = NodePath("MarginContainer/VBoxContainer/TeamsVBox/Team1VBox/PlayersVBox")
 _teamBContainer = NodePath("MarginContainer/VBoxContainer/TeamsVBox/Team2VBox/PlayersVBox")
 _readyButton = NodePath("MarginContainer/VBoxContainer/FooterRow/MarginContainer/ReadyButton")
+_matchStartLabel = NodePath("MarginContainer/VBoxContainer/FooterRow/MarginContainer/MatchStartLabel")
 
 [node name="MarginContainer" type="MarginContainer" parent="." unique_id=565112788]
 layout_mode = 2
@@ -71,6 +97,7 @@ theme_override_constants/separation = 5
 
 [node name="HeaderRow" type="PanelContainer" parent="MarginContainer/VBoxContainer" unique_id=1622716683]
 layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_81g6x")
 
 [node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer/HeaderRow" unique_id=135372749]
 layout_mode = 2
@@ -136,6 +163,7 @@ theme_override_constants/separation = 0
 
 [node name="FooterRow" type="PanelContainer" parent="MarginContainer/VBoxContainer" unique_id=662377170]
 layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_wfbhu")
 
 [node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer/FooterRow" unique_id=1936608940]
 layout_mode = 2

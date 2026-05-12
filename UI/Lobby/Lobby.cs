@@ -8,20 +8,40 @@ public partial class Lobby : Control
 	[Export] private VBoxContainer _teamAContainer;
 	[Export] private VBoxContainer _teamBContainer;
 	[Export] private Button _readyButton;
+	[Export] private Label _matchStartLabel;
 
 	private Dictionary<long, PlayerData> _serverPlayers = new Dictionary<long, PlayerData>();
 	private bool _isLocalPlayerReady = false;
+	private double _countdownTime = 5.0;
+	private bool _isCountdownActive = false;
 
 	public override void _Ready()
 	{
 		_readyButton.Pressed += OnReadyButtonPressed;
+		
+		if (_matchStartLabel != null) 
+			_matchStartLabel.Visible = false;
 
 		if (Multiplayer.IsServer())
 		{
 			Multiplayer.PeerConnected += OnPeerConnected;
 			Multiplayer.PeerDisconnected += OnPeerDisconnected;
-			
 			AddPlayerToServerList(Multiplayer.GetUniqueId());
+		}
+	}
+
+	public override void _Process(double delta)
+	{
+		if (!Multiplayer.IsServer() || !_isCountdownActive) return;
+
+		_countdownTime -= delta;
+		
+		Rpc(MethodName.UpdateTimerUI, _countdownTime);
+
+		if (_countdownTime <= 0)
+		{
+			_isCountdownActive = false;
+			Rpc(MethodName.LoadGameScene);
 		}
 	}
 
@@ -29,7 +49,6 @@ public partial class Lobby : Control
 	{
 		_isLocalPlayerReady = !_isLocalPlayerReady;
 		_readyButton.Text = _isLocalPlayerReady ? "Unready" : "Ready";
-		
 		RpcId(1, MethodName.ReceiveReadyState, _isLocalPlayerReady);
 	}
 
@@ -44,6 +63,7 @@ public partial class Lobby : Control
 		{
 			_serverPlayers.Remove(id);
 			BroadcastLobbyState();
+			CheckAllPlayersReady(); 
 		}
 	}
 
@@ -63,6 +83,7 @@ public partial class Lobby : Control
 		};
 
 		BroadcastLobbyState();
+		CheckAllPlayersReady();
 	}
 
 	[Rpc(MultiplayerApi.RpcMode.AnyPeer, CallLocal = true)]
@@ -75,7 +96,6 @@ public partial class Lobby : Control
 		{
 			_serverPlayers[senderId].IsReady = isReady;
 			BroadcastLobbyState();
-			
 			CheckAllPlayersReady(); 
 		}
 	}
@@ -93,7 +113,6 @@ public partial class Lobby : Control
 				{ "Team", p.Team }, 
 				{ "IsReady", p.IsReady }
 			};
-			
 			godotArray.Add(playerDict);
 		}
 
@@ -103,10 +122,50 @@ public partial class Lobby : Control
 
 	private void CheckAllPlayersReady()
 	{
-		if (_serverPlayers.Count > 0 && _serverPlayers.Values.All(p => p.IsReady))
+		bool allReady = _serverPlayers.Count > 0 && _serverPlayers.Values.All(p => p.IsReady);
+
+		if (allReady)
 		{
-			GD.Print("Everyone is ready! Start 5s countdown...");
+			if (!_isCountdownActive)
+			{
+				_isCountdownActive = true;
+				_countdownTime = 5.0;
+				Rpc(MethodName.ToggleTimerVisibility, true);
+			}
 		}
+		else
+		{
+			if (_isCountdownActive)
+			{
+				_isCountdownActive = false;
+				Rpc(MethodName.ToggleTimerVisibility, false);
+			}
+		}
+	}
+
+	[Rpc(MultiplayerApi.RpcMode.Authority, CallLocal = true)]
+	private void ToggleTimerVisibility(bool isVisible)
+	{
+		if (_matchStartLabel != null)
+		{
+			_matchStartLabel.Visible = isVisible;
+			if (isVisible) _matchStartLabel.Text = "Match Starting in 5.0s...";
+		}
+	}
+
+	[Rpc(MultiplayerApi.RpcMode.Authority, CallLocal = true)]
+	private void UpdateTimerUI(double timeLeft)
+	{
+		if (_matchStartLabel != null && _matchStartLabel.Visible)
+		{
+			_matchStartLabel.Text = $"Match Starting in {timeLeft:0.0}s...";
+		}
+	}
+
+	[Rpc(MultiplayerApi.RpcMode.Authority, CallLocal = true)]
+	private void LoadGameScene()
+	{
+		GetTree().ChangeSceneToFile("res://Levels/MainMap.tscn");
 	}
 
 	[Rpc(MultiplayerApi.RpcMode.Authority, CallLocal = true)]
