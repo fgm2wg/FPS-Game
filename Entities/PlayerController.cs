@@ -15,12 +15,39 @@ public partial class PlayerController : CharacterBody3D
 		if (!IsMultiplayerAuthority())
 		{
 			_camera.Current = false;
-			Input.MouseMode = Input.MouseModeEnum.Captured;
 		}
 		else
 		{
 			_camera.Current = true;
 			Input.MouseMode = Input.MouseModeEnum.Captured;
+		}
+	}
+
+	public override void _UnhandledInput(InputEvent @event)
+	{
+		if (!IsMultiplayerAuthority()) return;
+
+		if (Input.IsActionJustPressed(InputMapKeys.Pause))
+		{
+			if (Input.MouseMode == Input.MouseModeEnum.Captured)
+			{
+				Input.MouseMode = Input.MouseModeEnum.Visible;
+				EventBus.OnPauseMenuToggled?.Invoke(true); 
+			}
+			else 
+			{
+				Input.MouseMode = Input.MouseModeEnum.Captured;
+				EventBus.OnPauseMenuToggled?.Invoke(false);
+			}
+		}
+
+		if (Input.IsActionJustPressed(InputMapKeys.Shoot))
+		{
+			if (Input.MouseMode == Input.MouseModeEnum.Visible)
+			{
+				Input.MouseMode = Input.MouseModeEnum.Captured;
+				EventBus.OnPauseMenuToggled?.Invoke(false);
+			}
 		}
 	}
 }

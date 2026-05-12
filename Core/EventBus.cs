@@ -9,4 +9,6 @@ public partial class EventBus : Node
 	public static Action<long> OnPlayerConnected;
 	public static Action<long> OnPlayerDisconnected;
 	public static Action<int> OnGameStartTimerUpdated;
+	
+	public static Action<bool> OnPauseMenuToggled;
 }

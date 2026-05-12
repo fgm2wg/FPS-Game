@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://j08htyw704lb" path="res://Levels/MainMap.cs" id="1_k2731"]
 [ext_resource type="PackedScene" uid="uid://bqxv3umdhq1e0" path="res://Entities/Player.tscn" id="2_edq0r"]
+[ext_resource type="PackedScene" uid="uid://brepdy3wjbdg0" path="res://UI/PauseMenu/PauseMenu.tscn" id="3_yckqg"]
 
 [node name="MainMap" type="Node3D" unique_id=427450590 node_paths=PackedStringArray("_playersContainer")]
 script = ExtResource("1_k2731")
@@ -21,3 +22,5 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
 [node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="." unique_id=1570174731]
 _spawnable_scenes = PackedStringArray("uid://bqxv3umdhq1e0")
 spawn_path = NodePath("../PlayersContainer")
+
+[node name="PauseMenu" parent="." unique_id=2104626748 instance=ExtResource("3_yckqg")]

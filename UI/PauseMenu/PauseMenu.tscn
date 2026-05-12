@@ -1,0 +1,38 @@
+[gd_scene format=3 uid="uid://brepdy3wjbdg0"]
+
+[ext_resource type="Script" uid="uid://die5w1gagiooa" path="res://UI/PauseMenu/PauseMenu.cs" id="1_3oydc"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_dp43n"]
+font_size = 48
+outline_size = 2
+
+[node name="PauseMenu" type="CanvasLayer" unique_id=2104626748 node_paths=PackedStringArray("_quitButton")]
+script = ExtResource("1_3oydc")
+_quitButton = NodePath("PanelContainer/MarginContainer/ExitButton")
+
+[node name="PanelContainer" type="PanelContainer" parent="." unique_id=952450611]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer" unique_id=902500644]
+layout_mode = 2
+
+[node name="PauseLabel" type="Label" parent="PanelContainer/MarginContainer" unique_id=933451341]
+layout_mode = 2
+text = "GAME PAUSED"
+label_settings = SubResource("LabelSettings_dp43n")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ExitButton" type="Button" parent="PanelContainer/MarginContainer" unique_id=1912435816]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 0
+tooltip_text = "Exit"
+mouse_default_cursor_shape = 2
+theme_override_font_sizes/font_size = 24
+text = "X"
