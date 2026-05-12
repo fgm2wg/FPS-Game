@@ -1,4 +1,5 @@
 using Godot;
+using System;
 
 public partial class PlayerController : CharacterBody3D
 {
@@ -7,7 +8,7 @@ public partial class PlayerController : CharacterBody3D
 	[Export] private Label3D _nameBillboard;
 	[Export] private Node3D _playerBody;
 	[Export] private BaseWeapon _equippedWeapon;
-	[Export] private CanvasLayer _crosshair;
+	[Export] private CanvasLayer _playerHUD;
 
 	public override void _EnterTree()
 	{
@@ -31,28 +32,46 @@ public partial class PlayerController : CharacterBody3D
 			}
 		}
 
-		if (!IsMultiplayerAuthority())
-		{
-			_camera.Current = false;
-			if (_crosshair != null) _crosshair.Visible = false;
-		}
-		else
+		if (IsMultiplayerAuthority())
 		{
 			_camera.Current = true;
 			Input.MouseMode = Input.MouseModeEnum.Captured;
-			_nameBillboard.Visible = false;
-			
-			if (_crosshair != null) _crosshair.Visible = true;
+			if (_nameBillboard != null) _nameBillboard.Visible = false; 
+			if (_playerHUD != null) _playerHUD.Visible = true;
+			if (_playerBody != null) SetShadowsOnlyRecursively(_playerBody);
 
-			if (_playerBody != null)
+			if (GameManager.Players.ContainsKey(myId))
 			{
-				SetShadowsOnlyRecursively(_playerBody);
+				int team = GameManager.Players[myId].Team;
+				string targetGroup = team == 0 ? "Team1Spawns" : "Team2Spawns";
+				var spawnNodes = GetTree().GetNodesInGroup(targetGroup);
+
+				if (spawnNodes.Count > 0)
+				{
+					Random rng = new Random((int)myId);
+					int randomIndex = rng.Next(spawnNodes.Count);
+
+					if (spawnNodes[randomIndex] is Marker3D spawnMarker)
+					{
+						GlobalPosition = spawnMarker.GlobalPosition;
+					}
+				}
+				else
+				{
+					GlobalPosition = new Vector3(0, 2.0f, 0);
+					GD.PrintErr($"WARNING: No spawn points found in group {targetGroup}!");
+				}
 			}
+		}
+		else
+		{
+			_camera.Current = false;
+			if (_playerHUD != null) _playerHUD.Visible = false;
 		}
 	}
 	
 	public override void _Process(double delta)
-	{
+	{		
 		if (!IsMultiplayerAuthority()) return;
 
 		if (Input.MouseMode == Input.MouseModeEnum.Captured && _equippedWeapon != null)

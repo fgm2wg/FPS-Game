@@ -90,7 +90,7 @@ corner_detail = 5
 [sub_resource type="LabelSettings" id="LabelSettings_gmay1"]
 font_size = 24
 
-[node name="Lobby" type="PanelContainer" unique_id=409785544 node_paths=PackedStringArray("_teamAContainer", "_teamBContainer", "_teamANoPlayerRow", "_teamBNoPlayerRow", "_readyButton", "_matchStartLabel")]
+[node name="Lobby" type="PanelContainer" unique_id=409785544 node_paths=PackedStringArray("_team1Container", "_team2Container", "_team1NoPlayerRow", "_team2NoPlayerRow", "_readyButton", "_matchStartLabel")]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -99,10 +99,10 @@ grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_w20w5")
 script = ExtResource("1_kvxhh")
 _playerEntryScene = ExtResource("2_gmay1")
-_teamAContainer = NodePath("MarginContainer/VBoxContainer/TeamsVBox/Team1VBox/PlayersVBox")
-_teamBContainer = NodePath("MarginContainer/VBoxContainer/TeamsVBox/Team2VBox/PlayersVBox")
-_teamANoPlayerRow = NodePath("MarginContainer/VBoxContainer/TeamsVBox/Team1VBox/PlayersVBox/NoPlayersRow")
-_teamBNoPlayerRow = NodePath("MarginContainer/VBoxContainer/TeamsVBox/Team2VBox/PlayersVBox/NoPlayersRow")
+_team1Container = NodePath("MarginContainer/VBoxContainer/TeamsVBox/Team1VBox/PlayersVBox")
+_team2Container = NodePath("MarginContainer/VBoxContainer/TeamsVBox/Team2VBox/PlayersVBox")
+_team1NoPlayerRow = NodePath("MarginContainer/VBoxContainer/TeamsVBox/Team1VBox/PlayersVBox/NoPlayersRow")
+_team2NoPlayerRow = NodePath("MarginContainer/VBoxContainer/TeamsVBox/Team2VBox/PlayersVBox/NoPlayersRow")
 _readyButton = NodePath("MarginContainer/VBoxContainer/FooterRow/MarginContainer/ReadyButton")
 _matchStartLabel = NodePath("MarginContainer/VBoxContainer/FooterRow/MarginContainer/MatchStartLabel")
 

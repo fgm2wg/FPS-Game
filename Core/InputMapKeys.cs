@@ -5,6 +5,7 @@ public static class InputMapKeys
 	public const string MoveLeft = "move_left";
 	public const string MoveRight = "move_right";
 	public const string Jump = "jump";
+	public const string Sprint = "sprint";
 	
 	public const string Shoot = "shoot";
 	public const string Reload = "reload";

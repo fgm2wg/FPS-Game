@@ -5,10 +5,10 @@ using System.Linq;
 public partial class Lobby : Control
 {
 	[Export] private PackedScene _playerEntryScene;
-	[Export] private VBoxContainer _teamAContainer;
-	[Export] private VBoxContainer _teamBContainer;
-	[Export] private Control _teamANoPlayerRow;
-	[Export] private Control _teamBNoPlayerRow;
+	[Export] private VBoxContainer _team1Container;
+	[Export] private VBoxContainer _team2Container;
+	[Export] private Control _team1NoPlayerRow;
+	[Export] private Control _team2NoPlayerRow;
 	[Export] private Button _readyButton;
 	[Export] private Label _matchStartLabel;
 
@@ -74,9 +74,9 @@ public partial class Lobby : Control
 
 	private void AddPlayerToServerList(long id)
 	{
-		int teamACount = GameManager.Players.Values.Count(p => p.Team == 0);
-		int teamBCount = GameManager.Players.Values.Count(p => p.Team == 1);
-		int assignedTeam = (teamACount <= teamBCount) ? 0 : 1;
+		int team1Count = GameManager.Players.Values.Count(p => p.Team == 0);
+		int team2Count = GameManager.Players.Values.Count(p => p.Team == 1);
+		int assignedTeam = (team1Count <= team2Count) ? 0 : 1;
 
 		string finalName = id == 1 
 			? (string.IsNullOrWhiteSpace(GameManager.LocalPlayerName) ? $"Player {id}" : GameManager.LocalPlayerName) 
@@ -179,21 +179,21 @@ public partial class Lobby : Control
 	[Rpc(MultiplayerApi.RpcMode.Authority, CallLocal = true)]
 	private void UpdateClientUI(string jsonState)
 	{
-		foreach (Node child in _teamAContainer.GetChildren())
+		foreach (Node child in _team1Container.GetChildren())
 		{
-			if (child != _teamANoPlayerRow) child.QueueFree();
+			if (child != _team1NoPlayerRow) child.QueueFree();
 		}
-		foreach (Node child in _teamBContainer.GetChildren())
+		foreach (Node child in _team2Container.GetChildren())
 		{
-			if (child != _teamBNoPlayerRow) child.QueueFree();
+			if (child != _team2NoPlayerRow) child.QueueFree();
 		}
 
 		Json json = new Json();
 		json.Parse(jsonState);
 		var parsedData = json.Data.AsGodotArray<Godot.Collections.Dictionary>();
 
-		int teamAIndex = 0;
-		int teamBIndex = 0;
+		int team1Index = 0;
+		int team2Index = 0;
 
 		GameManager.Players.Clear();
 
@@ -210,22 +210,22 @@ public partial class Lobby : Control
 
 			if (pTeam == 0)
 			{
-				bool useAltColor = teamAIndex % 2 != 0;
+				bool useAltColor = team1Index % 2 != 0;
 				entry.UpdateData(pName, pReady, useAltColor);
-				_teamAContainer.AddChild(entry);
-				teamAIndex++;
+				_team1Container.AddChild(entry);
+				team1Index++;
 			}
 			else
 			{
-				bool useAltColor = teamBIndex % 2 != 0;
+				bool useAltColor = team2Index % 2 != 0;
 				entry.UpdateData(pName, pReady, useAltColor);
-				_teamBContainer.AddChild(entry);
-				teamBIndex++;
+				_team2Container.AddChild(entry);
+				team2Index++;
 			}
 		}
 
-		if (_teamANoPlayerRow != null) _teamANoPlayerRow.Visible = (teamAIndex == 0);
-		if (_teamBNoPlayerRow != null) _teamBNoPlayerRow.Visible = (teamBIndex == 0);
+		if (_team1NoPlayerRow != null) _team1NoPlayerRow.Visible = (team1Index == 0);
+		if (_team2NoPlayerRow != null) _team2NoPlayerRow.Visible = (team2Index == 0);
 	}
 	
 	[Rpc(MultiplayerApi.RpcMode.AnyPeer, CallLocal = true)]

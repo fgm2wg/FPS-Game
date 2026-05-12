@@ -1,4 +1,5 @@
 using Godot;
+using System;
 
 public partial class MainMap : Node3D
 {
@@ -22,9 +23,8 @@ public partial class MainMap : Node3D
 	private void SpawnPlayer(long id)
 	{
 		Node3D player = _playerScene.Instantiate<Node3D>();
-		
-		player.Name = id.ToString(); 
-		
+		player.Name = id.ToString();
+		player.SetMultiplayerAuthority((int)id);
 		_playersContainer.AddChild(player, true); 
 	}
 

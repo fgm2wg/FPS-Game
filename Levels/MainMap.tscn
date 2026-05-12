@@ -2,25 +2,62 @@
 
 [ext_resource type="Script" uid="uid://j08htyw704lb" path="res://Levels/MainMap.cs" id="1_k2731"]
 [ext_resource type="PackedScene" uid="uid://bqxv3umdhq1e0" path="res://Entities/Players/Player.tscn" id="2_edq0r"]
+[ext_resource type="Texture2D" uid="uid://cv8t1bfitcwaf" path="res://Assets/Textures/PavingStones/PavingStones150_1K-JPG_Color.jpg" id="3_1xwcd"]
 [ext_resource type="PackedScene" uid="uid://brepdy3wjbdg0" path="res://UI/PauseMenu/PauseMenu.tscn" id="3_yckqg"]
+[ext_resource type="Texture2D" uid="uid://c3xnayo7pirjo" path="res://Assets/Textures/PavingStones/PavingStones150_1K-JPG_AmbientOcclusion.jpg" id="4_17i70"]
 [ext_resource type="PackedScene" uid="uid://dduyc0q4o7llt" path="res://UI/FPSOverlay/FPSOverlay.tscn" id="4_rryg2"]
+[ext_resource type="Texture2D" uid="uid://duqebfjqsgltk" path="res://Assets/Textures/PavingStones/PavingStones150_1K-JPG_NormalGL.jpg" id="5_0y3mc"]
+[ext_resource type="Texture2D" uid="uid://nxu3imy5jmcp" path="res://Assets/Textures/PavingStones/PavingStones150_1K-JPG_Roughness.jpg" id="6_uvywi"]
+[ext_resource type="Texture2D" uid="uid://dl8mq7l0e0sid" path="res://Assets/Textures/Bricks/Bricks094_1K-JPG_Color.jpg" id="7_ch1hg"]
+[ext_resource type="Texture2D" uid="uid://b1ufrxboe7rx8" path="res://Assets/Textures/Bricks/Bricks094_1K-JPG_AmbientOcclusion.jpg" id="8_f8qa8"]
+[ext_resource type="Texture2D" uid="uid://ker0trmnxmj2" path="res://Assets/Textures/Bricks/Bricks094_1K-JPG_NormalGL.jpg" id="9_gxscw"]
+[ext_resource type="Texture2D" uid="uid://bxf2jglu7p20l" path="res://Assets/Textures/Bricks/Bricks094_1K-JPG_Roughness.jpg" id="10_a0sqh"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rryg2"]
-albedo_color = Color(2.0455569e-07, 0.3480443, 5.7756904e-07, 1)
+albedo_texture = ExtResource("3_1xwcd")
+roughness_texture = ExtResource("6_uvywi")
+normal_enabled = true
+normal_texture = ExtResource("5_0y3mc")
+ao_enabled = true
+ao_texture = ExtResource("4_17i70")
+uv1_scale = Vector3(50, 50, 50)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8lf85"]
+albedo_texture = ExtResource("7_ch1hg")
+roughness_texture = ExtResource("10_a0sqh")
+normal_enabled = true
+normal_texture = ExtResource("9_gxscw")
+ao_enabled = true
+ao_texture = ExtResource("8_f8qa8")
+uv1_scale = Vector3(0.2, 0.2, 0.2)
+uv1_triplanar = true
+uv1_world_triplanar = true
 
 [node name="MainMap" type="Node3D" unique_id=427450590 node_paths=PackedStringArray("_playersContainer")]
 script = ExtResource("1_k2731")
 _playersContainer = NodePath("PlayersContainer")
 _playerScene = ExtResource("2_edq0r")
 
-[node name="CSGBox3D" type="CSGBox3D" parent="." unique_id=1450248325]
-transform = Transform3D(50, 0, 0, 0, 1, 0, 0, 0, 50, 0, 0, 0)
-use_collision = true
-material = SubResource("StandardMaterial3D_rryg2")
-
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=2130551389]
 transform = Transform3D(0.70710677, -0.49999997, 0.49999997, 0, 0.70710677, 0.70710677, -0.70710677, -0.49999997, 0.49999997, 0, 0, 0)
 shadow_enabled = true
+
+[node name="CSGBox3D" type="CSGBox3D" parent="." unique_id=1450248325]
+transform = Transform3D(500, 0, 0, 0, 1, 0, 0, 0, 500, 0, 0, 0)
+use_collision = true
+material = SubResource("StandardMaterial3D_rryg2")
+
+[node name="MapObjects" type="Node3D" parent="." unique_id=129525344]
+
+[node name="CSGBox3D" type="CSGBox3D" parent="MapObjects" unique_id=877611199]
+transform = Transform3D(10, 0, 0, 0, 2, 0, 0, 0, 10, 180, 1.5, -180)
+use_collision = true
+material = SubResource("StandardMaterial3D_8lf85")
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="MapObjects" unique_id=1612579798]
+transform = Transform3D(10, 0, 0, 0, 2, 0, 0, 0, 10, -180, 1.5, 180)
+use_collision = true
+material = SubResource("StandardMaterial3D_8lf85")
 
 [node name="PlayersContainer" type="Node3D" parent="." unique_id=367382922]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
@@ -32,3 +69,13 @@ spawn_path = NodePath("../PlayersContainer")
 [node name="PauseMenu" parent="." unique_id=2104626748 instance=ExtResource("3_yckqg")]
 
 [node name="FPSOverlay" parent="." unique_id=1319463385 instance=ExtResource("4_rryg2")]
+
+[node name="Team1Spawns" type="Node3D" parent="." unique_id=296943527]
+
+[node name="Marker3D" type="Marker3D" parent="Team1Spawns" unique_id=520739011 groups=["Team1Spawns"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -200, 2, 200)
+
+[node name="Team2Spawns" type="Node3D" parent="." unique_id=1571616541]
+
+[node name="Marker3D" type="Marker3D" parent="Team2Spawns" unique_id=1221701404 groups=["Team2Spawns"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 200, 2, -200)

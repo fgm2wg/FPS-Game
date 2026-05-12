@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://byp5f8j84i66t"]
 
-[ext_resource type="Texture2D" uid="uid://cyoh37cxayjbd" path="res://Entities/Weapons/BaseWeaponIcon.png" id="1_22i0t"]
+[ext_resource type="Texture2D" uid="uid://cyoh37cxayjbd" path="res://Entities/Weapons/BaseWeapon/BaseWeaponIcon.png" id="1_22i0t"]
 [ext_resource type="Script" uid="uid://tdlgsqg65uqp" path="res://UI/HUD/PlayerHUD.cs" id="1_vffar"]
 
 [node name="PlayerHUD" type="CanvasLayer" unique_id=1619948193 node_paths=PackedStringArray("_crosshair", "_ammoLabel", "_fireModeLabel")]

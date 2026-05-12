@@ -16,6 +16,11 @@ public partial class BaseWeapon : Node3D
 	[ExportCategory("Sound Effects")]
 	[Export] private AudioStreamPlayer3D _shootAudio;
 	[Export] private AudioStreamPlayer3D _reloadAudio;
+	
+	[ExportCategory("Bullet Settings")]
+	[Export] private PackedScene _tracerScene;
+	[Export] private Marker3D _muzzlePoint;
+	[Export] private GpuParticles3D _muzzleFlash;
 
 	private int _currentAmmo;
 	private double _timeSinceLastShot = 0;
@@ -53,18 +58,20 @@ public partial class BaseWeapon : Node3D
 		_currentAmmo--;
 		_timeSinceLastShot = 0;
 		EventBus.OnAmmoChanged?.Invoke(_currentAmmo, MaxAmmo);
-
-		if (_shootAudio != null) 
-		{
-			_shootAudio.Play();
-		}
+		if (_shootAudio != null) _shootAudio.Play();
+		
+		if (_muzzleFlash != null) _muzzleFlash.Restart();
 
 		// if (_animPlayer != null) _animPlayer.Play("shoot_recoil");
+		
+		Vector3 targetHitPosition;
+		_aimRaycast.ForceRaycastUpdate();
 
 		if (_aimRaycast.IsColliding())
 		{
+			targetHitPosition = _aimRaycast.GetCollisionPoint();
+
 			Node hitObject = (Node)_aimRaycast.GetCollider();
-			
 			HealthComponent health = hitObject.GetNodeOrNull<HealthComponent>("HealthComponent");
 
 			if (health != null)
@@ -73,10 +80,22 @@ public partial class BaseWeapon : Node3D
 				health.RpcId(1, HealthComponent.MethodName.RequestTakeDamage, Damage, myId);
 			}
 		}
-		else if (_currentAmmo == 0)
+		else 
 		{
-			AttemptReload(); 
+			targetHitPosition = _aimRaycast.ToGlobal(_aimRaycast.TargetPosition);
 		}
+		
+		if (_tracerScene != null && _muzzlePoint != null)
+		{
+			BulletTracer tracer = _tracerScene.Instantiate<BulletTracer>();
+			GetTree().CurrentScene.AddChild(tracer);
+			tracer.Setup(_muzzlePoint.GlobalPosition, targetHitPosition);
+		}
+		
+		Rpc(MethodName.BroadcastTracer, _muzzlePoint.GlobalPosition, targetHitPosition);
+
+		if (_currentAmmo == 0)
+			AttemptReload();
 	}
 
 	public void AttemptReload()
@@ -110,5 +129,16 @@ public partial class BaseWeapon : Node3D
 			GD.Print("Aiming down sights...");
 		else
 			GD.Print("Hip firing...");
+	}
+	
+	[Rpc(MultiplayerApi.RpcMode.AnyPeer, CallLocal = true)]
+	private void BroadcastTracer(Vector3 start, Vector3 end)
+	{
+		if (_tracerScene != null)
+		{
+			BulletTracer tracer = _tracerScene.Instantiate<BulletTracer>();
+			GetTree().CurrentScene.AddChild(tracer);
+			tracer.Setup(start, end);
+		}
 	}
 }

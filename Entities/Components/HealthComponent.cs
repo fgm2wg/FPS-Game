@@ -41,10 +41,23 @@ public partial class HealthComponent : Node
 
 			CurrentHealth = MaxHealth;
 
-			Random rng = new Random();
-			float randomX = (float)(rng.NextDouble() * 20 - 10);
-			float randomZ = (float)(rng.NextDouble() * 20 - 10);
-			Vector3 respawnPosition = new Vector3(randomX, 2.0f, randomZ);
+			int myTeam = GameManager.Players[myId].Team;
+			string targetGroup = myTeam == 0 ? "Team1Spawns" : "Team2Spawns";
+
+			var spawnNodes = GetTree().GetNodesInGroup(targetGroup);
+			
+			Vector3 respawnPosition = new Vector3(0, 2.0f, 0);
+
+			if (spawnNodes.Count > 0)
+			{
+				Random rng = new Random();
+				int randomIndex = rng.Next(spawnNodes.Count);
+				
+				if (spawnNodes[randomIndex] is Marker3D spawnMarker)
+				{
+					respawnPosition = spawnMarker.GlobalPosition;
+				}
+			}
 
 			RpcId(myId, MethodName.ClientPerformRespawn, respawnPosition);
 		}

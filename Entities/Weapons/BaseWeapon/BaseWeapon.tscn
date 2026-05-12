@@ -1,0 +1,64 @@
+[gd_scene format=3 uid="uid://c3m37vp57q3ed"]
+
+[ext_resource type="Script" uid="uid://cy1ndk5egoelu" path="res://Entities/Weapons/BaseWeapon/BaseWeapon.cs" id="1_6du57"]
+[ext_resource type="PackedScene" uid="uid://cqp8iqv603ulr" path="res://Entities/Weapons/VFX/BulletTracer.tscn" id="2_o38gh"]
+[ext_resource type="AudioStream" uid="uid://ckq1msflkiley" path="res://Entities/Weapons/BaseWeapon/BaseWeaponShootSound.mp3" id="2_r8vcn"]
+[ext_resource type="AudioStream" uid="uid://dk8f8xn85b4dy" path="res://Entities/Weapons/BaseWeapon/BaseWeaponReloadSound.mp3" id="3_8y4d0"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_3ihlh"]
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_o38gh"]
+direction = Vector3(0, 0, -1)
+initial_velocity_max = 5.0
+gravity = Vector3(0, 0, 0)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_o38gh"]
+blend_mode = 1
+albedo_color = Color(1, 0.5372549, 0.14117648, 1)
+emission_enabled = true
+emission = Color(1, 0.5372549, 0.14117648, 1)
+billboard_mode = 3
+particles_anim_h_frames = 1
+particles_anim_v_frames = 1
+particles_anim_loop = false
+
+[sub_resource type="QuadMesh" id="QuadMesh_il7hs"]
+material = SubResource("StandardMaterial3D_o38gh")
+size = Vector2(0.1, 0.1)
+
+[node name="BaseWeapon" type="Node3D" unique_id=591171837 node_paths=PackedStringArray("_aimRaycast", "_animPlayer", "_shootAudio", "_reloadAudio", "_muzzlePoint", "_muzzleFlash")]
+script = ExtResource("1_6du57")
+_aimRaycast = NodePath("AimRaycast")
+_animPlayer = NodePath("AnimationPlayer")
+_shootAudio = NodePath("ShootAudio")
+_reloadAudio = NodePath("ReloadAudio")
+_tracerScene = ExtResource("2_o38gh")
+_muzzlePoint = NodePath("Muzzle")
+_muzzleFlash = NodePath("Muzzle/MuzzleFlash")
+
+[node name="GunMesh" type="MeshInstance3D" parent="." unique_id=68979632]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.6, 0, 0, -0.3)
+mesh = SubResource("BoxMesh_3ihlh")
+
+[node name="Muzzle" type="Marker3D" parent="." unique_id=81535740]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.6)
+
+[node name="MuzzleFlash" type="GPUParticles3D" parent="Muzzle" unique_id=1422257653]
+emitting = false
+lifetime = 0.05
+one_shot = true
+explosiveness = 1.0
+process_material = SubResource("ParticleProcessMaterial_o38gh")
+draw_pass_1 = SubResource("QuadMesh_il7hs")
+
+[node name="AimRaycast" type="RayCast3D" parent="." unique_id=1372508244]
+target_position = Vector3(0, 0, -1000)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=2013899779]
+
+[node name="ShootAudio" type="AudioStreamPlayer3D" parent="." unique_id=933998476]
+stream = ExtResource("2_r8vcn")
+max_polyphony = 10
+
+[node name="ReloadAudio" type="AudioStreamPlayer3D" parent="." unique_id=422734376]
+stream = ExtResource("3_8y4d0")

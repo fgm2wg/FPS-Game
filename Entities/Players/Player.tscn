@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://8j8bxuej4k8s" path="res://Entities/Players/PlayerController.cs" id="1_41wu2"]
 [ext_resource type="Script" uid="uid://qw0nnmxtjegp" path="res://Entities/Components/LookComponent.cs" id="2_0gd87"]
 [ext_resource type="Script" uid="uid://cgn6pwnu22xc6" path="res://Entities/Components/MovementComponent.cs" id="2_1iada"]
-[ext_resource type="PackedScene" uid="uid://c3m37vp57q3ed" path="res://Entities/Weapons/BaseWeapon.tscn" id="3_svees"]
+[ext_resource type="PackedScene" uid="uid://c3m37vp57q3ed" path="res://Entities/Weapons/BaseWeapon/BaseWeapon.tscn" id="3_svees"]
 [ext_resource type="Script" uid="uid://cn3piaqxev3gy" path="res://Entities/Components/HealthComponent.cs" id="5_n4urq"]
 [ext_resource type="PackedScene" uid="uid://bigynjo84xxm4" path="res://UI/DamageIndicator/DamageIndicator.tscn" id="6_noust"]
 [ext_resource type="PackedScene" uid="uid://byp5f8j84i66t" path="res://UI/HUD/PlayerHUD.tscn" id="7_n4j1o"]
@@ -52,14 +52,14 @@ properties/1/path = NodePath(".:rotation")
 properties/1/spawn = true
 properties/1/replication_mode = 1
 
-[node name="Player" type="CharacterBody3D" unique_id=1560874725 node_paths=PackedStringArray("_camera", "_movementComponent", "_nameBillboard", "_playerBody", "_equippedWeapon", "_crosshair")]
+[node name="Player" type="CharacterBody3D" unique_id=1560874725 node_paths=PackedStringArray("_camera", "_movementComponent", "_nameBillboard", "_playerBody", "_equippedWeapon", "_playerHUD")]
 script = ExtResource("1_41wu2")
 _camera = NodePath("CameraPivot/Camera3D")
 _movementComponent = NodePath("MovementComponent")
 _nameBillboard = NodePath("PlayerNameLabel")
 _playerBody = NodePath("Body")
 _equippedWeapon = NodePath("CameraPivot/Camera3D/WeaponMount/BaseWeapon")
-_crosshair = NodePath("Crosshair")
+_playerHUD = NodePath("PlayerHUD")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=2122354048]
 shape = SubResource("CapsuleShape3D_mq5ly")
@@ -125,4 +125,4 @@ _damageIndicatorScene = ExtResource("6_noust")
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="." unique_id=440234245]
 replication_config = SubResource("SceneReplicationConfig_41wu2")
 
-[node name="Crosshair" parent="." unique_id=1619948193 instance=ExtResource("7_n4j1o")]
+[node name="PlayerHUD" parent="." unique_id=1619948193 instance=ExtResource("7_n4j1o")]
