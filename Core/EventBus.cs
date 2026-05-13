@@ -14,4 +14,5 @@ public partial class EventBus : Node
 	public static Action<int, int> OnAmmoChanged;
 	public static Action<string> OnFireModeChanged;
 	public static Action<long, string, long, string, string> OnPlayerKilled;
+	public static Action<float, float> OnLocalPlayerHealthChanged;
 }

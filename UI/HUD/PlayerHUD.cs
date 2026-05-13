@@ -7,6 +7,8 @@ public partial class PlayerHUD : CanvasLayer
 	[Export] private Label _fireModeLabel;
 	[Export] private VBoxContainer _killfeedContainer;
 	[Export] private PackedScene _killfeedEntryScene;
+	[Export] private ProgressBar _healthBar;
+	[Export] private Label _healthBarLabel;
 
 	public override void _Ready()
 	{
@@ -18,6 +20,7 @@ public partial class PlayerHUD : CanvasLayer
 		EventBus.OnAmmoChanged += UpdateAmmoDisplay;
 		EventBus.OnFireModeChanged += UpdateFireModeDisplay;
 		EventBus.OnPlayerKilled += HandlePlayerKilled;
+		EventBus.OnLocalPlayerHealthChanged += UpdateHealthBar;
 	}
 
 	public override void _ExitTree()
@@ -25,6 +28,7 @@ public partial class PlayerHUD : CanvasLayer
 		EventBus.OnAmmoChanged -= UpdateAmmoDisplay;
 		EventBus.OnFireModeChanged -= UpdateFireModeDisplay;
 		EventBus.OnPlayerKilled -= HandlePlayerKilled;
+		EventBus.OnLocalPlayerHealthChanged -= UpdateHealthBar;
 	}
 
 	private void UpdateAmmoDisplay(int currentAmmo, int maxAmmo)
@@ -50,6 +54,36 @@ public partial class PlayerHUD : CanvasLayer
 			KillfeedEntry entry = _killfeedEntryScene.Instantiate<KillfeedEntry>();
 			_killfeedContainer.AddChild(entry);
 			entry.Setup(killerId, killerName, victimId, victimName, weaponName);
+		}
+	}
+	
+	private void UpdateHealthBar(float currentHealth, float maxHealth)
+	{
+		if (_healthBar != null)
+		{
+			_healthBar.MaxValue = maxHealth;
+			_healthBar.Value = currentHealth;
+			
+			if (_healthBar.GetThemeStylebox("fill") is StyleBoxFlat fillStyle)
+			{
+				if (currentHealth <= 35)
+				{
+					fillStyle.BgColor = Color.FromHtml("#a82020");
+				}
+				else if (currentHealth <= 65)
+				{
+					fillStyle.BgColor = Color.FromHtml("#cca300");
+				}
+				else
+				{
+					fillStyle.BgColor = Color.FromHtml("#1a851a");
+				}
+			}
+		}
+		
+		if (_healthBarLabel != null)
+		{
+			_healthBarLabel.Text = $"{currentHealth:F0} / {maxHealth:F0}";
 		}
 	}
 

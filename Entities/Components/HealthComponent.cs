@@ -6,9 +6,14 @@ public partial class HealthComponent : Node
 	[Export] public float MaxHealth = 100f;
 	[Export] private PackedScene _damageIndicatorScene;
 	[Export] private PackedScene _corpseScene;
+	
+	[ExportCategory("Regeneration")]
+	[Export] public float RegenDelay = 5.0f;
+	[Export] public float RegenRate = 15.0f;
 
 	public float CurrentHealth { get; private set; }
 	private CharacterBody3D _parentPlayer;
+	private double _timeSinceLastDamage = 0;
 
 	public override void _Ready()
 	{
@@ -33,8 +38,11 @@ public partial class HealthComponent : Node
 
 		CurrentHealth -= amount;
 		if (CurrentHealth < 0) CurrentHealth = 0;
+		
+		_timeSinceLastDamage = 0;
 
 		Rpc(MethodName.BroadcastDamageVisuals, amount);
+		RpcId(myId, MethodName.ClientUpdateHealthUI, CurrentHealth, MaxHealth);
 
 		if (CurrentHealth <= 0)
 		{
@@ -89,6 +97,8 @@ public partial class HealthComponent : Node
 
 			Camera3D mainCam = _parentPlayer.GetNodeOrNull<Camera3D>("CameraPivot/Camera3D");
 			if (mainCam != null) mainCam.Current = true;
+			
+			EventBus.OnLocalPlayerHealthChanged?.Invoke(CurrentHealth, MaxHealth);
 		}
 	}
 
@@ -154,6 +164,28 @@ public partial class HealthComponent : Node
 				if (mainCam != null) mainCam.Current = false;
 				corpse.ActivateCamera();
 			}
+		}
+	}
+	
+	[Rpc(MultiplayerApi.RpcMode.AnyPeer, CallLocal = true)]
+	private void ClientUpdateHealthUI(float current, float max)
+	{
+		EventBus.OnLocalPlayerHealthChanged?.Invoke(current, max);
+	}
+	
+	public override void _Process(double delta)
+	{
+		if (!Multiplayer.IsServer()) return;
+
+		_timeSinceLastDamage += delta;
+
+		if (_timeSinceLastDamage >= RegenDelay && CurrentHealth < MaxHealth)
+		{
+			CurrentHealth += RegenRate * (float)delta;
+			if (CurrentHealth > MaxHealth) CurrentHealth = MaxHealth;
+
+			long myId = long.Parse(_parentPlayer.Name);
+			RpcId(myId, MethodName.ClientUpdateHealthUI, CurrentHealth, MaxHealth);
 		}
 	}
 }
