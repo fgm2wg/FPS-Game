@@ -77,7 +77,7 @@ public partial class BaseWeapon : Node3D
 			if (health != null)
 			{
 				long myId = Multiplayer.GetUniqueId();
-				health.RpcId(1, HealthComponent.MethodName.RequestTakeDamage, Damage, myId);
+				health.RpcId(1, HealthComponent.MethodName.RequestTakeDamage, Damage, myId, "BaseWeaponIcon");
 			}
 		}
 		else 
@@ -110,7 +110,12 @@ public partial class BaseWeapon : Node3D
 			_reloadAudio.Play();
 		}
 
-		// if (_animPlayer != null) _animPlayer.Play("reload");
+		if (_animPlayer != null && _animPlayer.HasAnimation("reload"))
+		{
+			float nativeAnimLength = _animPlayer.GetAnimation("reload").Length;
+			float syncSpeed = nativeAnimLength / 2.6f;
+			_animPlayer.Play("reload", -1, syncSpeed);
+		}
 
 		GetTree().CreateTimer(2.6f).Timeout += () => 
 		{

@@ -16,7 +16,7 @@ public partial class HealthComponent : Node
 	}
 
 	[Rpc(MultiplayerApi.RpcMode.AnyPeer, CallLocal = true)]
-	public void RequestTakeDamage(float amount, long shooterId)
+	public void RequestTakeDamage(float amount, long shooterId, string weaponName)
 	{
 		if (!Multiplayer.IsServer()) return;
 
@@ -37,7 +37,7 @@ public partial class HealthComponent : Node
 
 		if (CurrentHealth <= 0)
 		{
-			GD.Print($"Player {myId} was killed by {shooterId}!");
+			GD.Print($"Player {myId} was killed by {shooterId} with {weaponName}!");
 
 			CurrentHealth = MaxHealth;
 
@@ -45,7 +45,6 @@ public partial class HealthComponent : Node
 			string targetGroup = myTeam == 0 ? "Team1Spawns" : "Team2Spawns";
 
 			var spawnNodes = GetTree().GetNodesInGroup(targetGroup);
-			
 			Vector3 respawnPosition = new Vector3(0, 2.0f, 0);
 
 			if (spawnNodes.Count > 0)
@@ -60,6 +59,7 @@ public partial class HealthComponent : Node
 			}
 
 			RpcId(myId, MethodName.ClientPerformRespawn, respawnPosition);
+			Rpc(MethodName.BroadcastKillfeed, shooterId, myId, weaponName);
 		}
 	}
 
@@ -69,7 +69,6 @@ public partial class HealthComponent : Node
 		if (Multiplayer.GetRemoteSenderId() != 1 && Multiplayer.GetRemoteSenderId() != 0) return;
 
 		CurrentHealth = MaxHealth;
-
 		_parentPlayer.GlobalPosition = respawnPos;
 		_parentPlayer.Velocity = Vector3.Zero;
 		
@@ -82,7 +81,6 @@ public partial class HealthComponent : Node
 		if (_damageIndicatorScene != null)
 		{
 			DamageIndicator indicator = _damageIndicatorScene.Instantiate<DamageIndicator>();
-			
 			GetTree().CurrentScene.AddChild(indicator);
 
 			Random rng = new Random();
@@ -90,8 +88,15 @@ public partial class HealthComponent : Node
 			float randomZ = (float)(rng.NextDouble() * 0.6 - 0.3);
 
 			Vector3 spawnPos = _parentPlayer.GlobalPosition + new Vector3(randomX, 1.5f, randomZ);
-
 			indicator.Setup(spawnPos, amount);
 		}
+	}
+
+	[Rpc(MultiplayerApi.RpcMode.AnyPeer, CallLocal = true)]
+	private void BroadcastKillfeed(long killerId, long victimId, string weaponName)
+	{
+		string killerName = GameManager.Players.ContainsKey(killerId) ? GameManager.Players[killerId].Name : "Unknown";
+		string victimName = GameManager.Players.ContainsKey(victimId) ? GameManager.Players[victimId].Name : "Unknown";
+		EventBus.OnPlayerKilled?.Invoke(killerId, killerName, victimId, victimName, weaponName);
 	}
 }

@@ -2,12 +2,15 @@
 
 [ext_resource type="Texture2D" uid="uid://cyoh37cxayjbd" path="res://Entities/Weapons/BaseWeapon/BaseWeaponIcon.png" id="1_22i0t"]
 [ext_resource type="Script" uid="uid://tdlgsqg65uqp" path="res://UI/HUD/PlayerHUD.cs" id="1_vffar"]
+[ext_resource type="PackedScene" uid="uid://duywvfu11tor7" path="res://UI/HUD/KillfeedEntry.tscn" id="2_miet7"]
 
-[node name="PlayerHUD" type="CanvasLayer" unique_id=1619948193 node_paths=PackedStringArray("_crosshair", "_ammoLabel", "_fireModeLabel")]
+[node name="PlayerHUD" type="CanvasLayer" unique_id=1619948193 node_paths=PackedStringArray("_crosshair", "_ammoLabel", "_fireModeLabel", "_killfeedContainer")]
 script = ExtResource("1_vffar")
 _crosshair = NodePath("CenterContainer/Crosshair")
-_ammoLabel = NodePath("MarginContainer/HBoxContainer/AmmoLabel")
-_fireModeLabel = NodePath("MarginContainer/HBoxContainer/FireModeLabel")
+_ammoLabel = NodePath("BottomRight/HBoxContainer/AmmoLabel")
+_fireModeLabel = NodePath("BottomRight/HBoxContainer/FireModeLabel")
+_killfeedContainer = NodePath("TopRight/KillfeedContainer")
+_killfeedEntryScene = ExtResource("2_miet7")
 
 [node name="CenterContainer" type="CenterContainer" parent="." unique_id=1798592802]
 anchors_preset = 15
@@ -23,7 +26,7 @@ layout_mode = 2
 mouse_filter = 2
 color = Color(0, 1, 1, 1)
 
-[node name="MarginContainer" type="MarginContainer" parent="." unique_id=430653606]
+[node name="BottomRight" type="MarginContainer" parent="." unique_id=430653606]
 anchors_preset = 3
 anchor_left = 1.0
 anchor_top = 1.0
@@ -38,11 +41,11 @@ theme_override_constants/margin_top = 30
 theme_override_constants/margin_right = 30
 theme_override_constants/margin_bottom = 30
 
-[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer" unique_id=1658779137]
+[node name="HBoxContainer" type="HBoxContainer" parent="BottomRight" unique_id=1658779137]
 layout_mode = 2
 theme_override_constants/separation = 5
 
-[node name="WeaponIcon" type="TextureRect" parent="MarginContainer/HBoxContainer" unique_id=875080212]
+[node name="WeaponIcon" type="TextureRect" parent="BottomRight/HBoxContainer" unique_id=875080212]
 texture_filter = 6
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
@@ -50,24 +53,39 @@ texture = ExtResource("1_22i0t")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="VSeparator" type="VSeparator" parent="MarginContainer/HBoxContainer" unique_id=2101458340]
+[node name="VSeparator" type="VSeparator" parent="BottomRight/HBoxContainer" unique_id=2101458340]
 custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
 size_flags_vertical = 4
 
-[node name="AmmoLabel" type="Label" parent="MarginContainer/HBoxContainer" unique_id=140644436]
+[node name="AmmoLabel" type="Label" parent="BottomRight/HBoxContainer" unique_id=140644436]
 custom_minimum_size = Vector2(52, 0)
 layout_mode = 2
 text = "30 / 30"
 horizontal_alignment = 2
 vertical_alignment = 1
 
-[node name="VSeparator2" type="VSeparator" parent="MarginContainer/HBoxContainer" unique_id=509933506]
+[node name="VSeparator2" type="VSeparator" parent="BottomRight/HBoxContainer" unique_id=509933506]
 custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
 size_flags_vertical = 4
 
-[node name="FireModeLabel" type="Label" parent="MarginContainer/HBoxContainer" unique_id=2094811135]
+[node name="FireModeLabel" type="Label" parent="BottomRight/HBoxContainer" unique_id=2094811135]
 custom_minimum_size = Vector2(45, 0)
 layout_mode = 2
 text = "Auto"
+
+[node name="TopRight" type="MarginContainer" parent="." unique_id=1464800917]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -40.0
+offset_bottom = 40.0
+grow_horizontal = 0
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="KillfeedContainer" type="VBoxContainer" parent="TopRight" unique_id=269790557]
+layout_mode = 2

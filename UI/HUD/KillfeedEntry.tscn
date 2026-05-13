@@ -1,0 +1,34 @@
+[gd_scene format=3 uid="uid://duywvfu11tor7"]
+
+[ext_resource type="Texture2D" uid="uid://cyoh37cxayjbd" path="res://Entities/Weapons/BaseWeapon/BaseWeaponIcon.png" id="1_lt1tf"]
+[ext_resource type="Script" uid="uid://bhryhof7byud8" path="res://UI/HUD/KillfeedEntry.cs" id="1_wd6mj"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_lt1tf"]
+outline_size = 1
+
+[sub_resource type="LabelSettings" id="LabelSettings_wd6mj"]
+outline_size = 1
+
+[node name="KillfeedEntry" type="HBoxContainer" unique_id=1986192071]
+theme_override_constants/separation = 10
+script = ExtResource("1_wd6mj")
+
+[node name="KillerLabel" type="Label" parent="." unique_id=562345821]
+layout_mode = 2
+text = "Player 1"
+label_settings = SubResource("LabelSettings_lt1tf")
+vertical_alignment = 1
+
+[node name="WeaponIcon" type="TextureRect" parent="." unique_id=769508227]
+texture_filter = 6
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+texture = ExtResource("1_lt1tf")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="VictimLabel" type="Label" parent="." unique_id=649169906]
+layout_mode = 2
+text = "Player 12804562985629"
+label_settings = SubResource("LabelSettings_wd6mj")
+vertical_alignment = 1
