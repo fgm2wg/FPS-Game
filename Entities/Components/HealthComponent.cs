@@ -133,6 +133,14 @@ public partial class HealthComponent : Node
 			Corpse corpse = _corpseScene.Instantiate<Corpse>();
 			GetTree().CurrentScene.AddChild(corpse);
 			corpse.GlobalPosition = _parentPlayer.GlobalPosition;
+			
+			long myId = long.Parse(_parentPlayer.Name);
+			if (GameManager.Players.ContainsKey(myId))
+			{
+				int myTeam = GameManager.Players[myId].Team;
+				Color teamColor = myTeam == 0 ? Colors.Blue : Colors.Red; 
+				corpse.SetColor(teamColor);
+			}
 
 			float flingForce = 25.0f;
 			Vector3 forceToApply = knockbackDir * flingForce;
