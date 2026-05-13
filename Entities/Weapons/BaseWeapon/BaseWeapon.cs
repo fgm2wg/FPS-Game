@@ -77,10 +77,10 @@ public partial class BaseWeapon : Node3D
 			if (health != null)
 			{
 				long myId = Multiplayer.GetUniqueId();
-				health.RpcId(1, HealthComponent.MethodName.RequestTakeDamage, Damage, myId, "BaseWeaponIcon");
+				health.RpcId(1, HealthComponent.MethodName.RequestTakeDamage, Damage, myId, "BaseWeaponIcon", GlobalPosition);
 			}
 		}
-		else 
+		else
 		{
 			targetHitPosition = _aimRaycast.ToGlobal(_aimRaycast.TargetPosition);
 		}

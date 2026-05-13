@@ -1,0 +1,60 @@
+[gd_scene format=3 uid="uid://cpu062locbeaf"]
+
+[ext_resource type="Script" uid="uid://catdakwmlo0eh" path="res://Entities/Players/Corpse.cs" id="1_jvx2s"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_obp47"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jvx2s"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_obp47"]
+material = SubResource("StandardMaterial3D_jvx2s")
+
+[sub_resource type="ORMMaterial3D" id="ORMMaterial3D_0gd87"]
+albedo_color = Color(1, 0.654902, 1, 1)
+
+[sub_resource type="TorusMesh" id="TorusMesh_jvx2s"]
+material = SubResource("ORMMaterial3D_0gd87")
+outer_radius = 0.35
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_io258"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_qsfmt"]
+material = SubResource("StandardMaterial3D_io258")
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_qsfmt"]
+
+[node name="Corpse" type="RigidBody3D" unique_id=652940686]
+script = ExtResource("1_jvx2s")
+
+[node name="Body" type="MeshInstance3D" parent="." unique_id=1582649002]
+mesh = SubResource("CapsuleMesh_obp47")
+
+[node name="Eye" type="MeshInstance3D" parent="Body" unique_id=1473305543]
+transform = Transform3D(0.07071068, -1.2802767e-10, -0.17677668, -0.07071068, -3.0908617e-10, -0.17677668, -1.2802769e-09, 0.009999999, -7.727154e-09, 0.15, 0.5, -0.5)
+mesh = SubResource("BoxMesh_obp47")
+
+[node name="Eye2" type="MeshInstance3D" parent="Body" unique_id=2020357956]
+transform = Transform3D(-0.07071068, -7.4619994e-10, -0.17677668, -0.07071068, -3.0908617e-10, 0.17677668, -7.462001e-09, 0.009999999, -7.727154e-09, 0.15, 0.5, -0.5)
+mesh = SubResource("BoxMesh_obp47")
+
+[node name="Eye3" type="MeshInstance3D" parent="Body" unique_id=767229671]
+transform = Transform3D(0.07071068, -1.2802767e-10, -0.17677668, -0.07071068, -3.0908617e-10, -0.17677668, -1.2802769e-09, 0.009999999, -7.727154e-09, -0.15, 0.5, -0.5)
+mesh = SubResource("BoxMesh_obp47")
+
+[node name="Eye4" type="MeshInstance3D" parent="Body" unique_id=221824595]
+transform = Transform3D(-0.07071068, -7.4619994e-10, -0.17677668, -0.07071068, -3.0908617e-10, 0.17677668, -7.462001e-09, 0.009999999, -7.727154e-09, -0.15, 0.5, -0.5)
+mesh = SubResource("BoxMesh_obp47")
+
+[node name="Mouth" type="MeshInstance3D" parent="Body" unique_id=1020661456]
+transform = Transform3D(0.3, 0, 0, 0, -8.742278e-09, -0.15, 0, 0.2, -6.5567085e-09, 0, 0.25, -0.5)
+mesh = SubResource("TorusMesh_jvx2s")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Body/Mouth" unique_id=351323086]
+transform = Transform3D(0.25, 0, 0, 0, 0.1, 0, 0, 0, 0.25, 0, 0, -0.25)
+mesh = SubResource("BoxMesh_qsfmt")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=479214805]
+shape = SubResource("CapsuleShape3D_qsfmt")
+
+[node name="Camera3D" type="Camera3D" parent="." unique_id=1603041104]
+transform = Transform3D(-1, 3.6946464e-08, -7.923194e-08, 0, 0.90630776, 0.42261827, 8.742278e-08, 0.42261827, -0.90630776, 0, 1, -2)

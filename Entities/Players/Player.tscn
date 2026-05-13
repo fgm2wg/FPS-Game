@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://c3m37vp57q3ed" path="res://Entities/Weapons/BaseWeapon/BaseWeapon.tscn" id="3_svees"]
 [ext_resource type="Script" uid="uid://cn3piaqxev3gy" path="res://Entities/Components/HealthComponent.cs" id="5_n4urq"]
 [ext_resource type="PackedScene" uid="uid://bigynjo84xxm4" path="res://UI/DamageIndicator/DamageIndicator.tscn" id="6_noust"]
+[ext_resource type="PackedScene" uid="uid://cpu062locbeaf" path="res://Entities/Players/Corpse.tscn" id="7_2subl"]
 [ext_resource type="PackedScene" uid="uid://byp5f8j84i66t" path="res://UI/HUD/PlayerHUD.tscn" id="7_n4j1o"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_mq5ly"]
@@ -121,6 +122,7 @@ script = ExtResource("2_1iada")
 [node name="HealthComponent" type="Node" parent="." unique_id=93801960]
 script = ExtResource("5_n4urq")
 _damageIndicatorScene = ExtResource("6_noust")
+_corpseScene = ExtResource("7_2subl")
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="." unique_id=440234245]
 replication_config = SubResource("SceneReplicationConfig_41wu2")

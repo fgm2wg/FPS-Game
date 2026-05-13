@@ -5,6 +5,7 @@ public partial class HealthComponent : Node
 {
 	[Export] public float MaxHealth = 100f;
 	[Export] private PackedScene _damageIndicatorScene;
+	[Export] private PackedScene _corpseScene;
 
 	public float CurrentHealth { get; private set; }
 	private CharacterBody3D _parentPlayer;
@@ -16,7 +17,7 @@ public partial class HealthComponent : Node
 	}
 
 	[Rpc(MultiplayerApi.RpcMode.AnyPeer, CallLocal = true)]
-	public void RequestTakeDamage(float amount, long shooterId, string weaponName)
+	public void RequestTakeDamage(float amount, long shooterId, string weaponName, Vector3 shooterPos)
 	{
 		if (!Multiplayer.IsServer()) return;
 
@@ -38,8 +39,13 @@ public partial class HealthComponent : Node
 		if (CurrentHealth <= 0)
 		{
 			GD.Print($"Player {myId} was killed by {shooterId} with {weaponName}!");
+			
+			Vector3 knockbackDir = (_parentPlayer.GlobalPosition - shooterPos).Normalized();
+			knockbackDir.Y = 0.25f;
+			knockbackDir = knockbackDir.Normalized();
 
-			CurrentHealth = MaxHealth;
+			Rpc(MethodName.BroadcastDeathPhysics, knockbackDir);
+			Rpc(MethodName.BroadcastKillfeed, shooterId, long.Parse(_parentPlayer.Name), weaponName);
 
 			int myTeam = GameManager.Players[myId].Team;
 			string targetGroup = myTeam == 0 ? "Team1Spawns" : "Team2Spawns";
@@ -58,21 +64,32 @@ public partial class HealthComponent : Node
 				}
 			}
 
-			RpcId(myId, MethodName.ClientPerformRespawn, respawnPosition);
-			Rpc(MethodName.BroadcastKillfeed, shooterId, myId, weaponName);
+			GetTree().CreateTimer(3.0f).Timeout += () => 
+			{
+				Rpc(MethodName.BroadcastRespawn, respawnPosition);
+			};
 		}
 	}
 
 	[Rpc(MultiplayerApi.RpcMode.AnyPeer, CallLocal = true)]
-	private void ClientPerformRespawn(Vector3 respawnPos)
+	private void BroadcastRespawn(Vector3 respawnPos)
 	{
 		if (Multiplayer.GetRemoteSenderId() != 1 && Multiplayer.GetRemoteSenderId() != 0) return;
 
 		CurrentHealth = MaxHealth;
-		_parentPlayer.GlobalPosition = respawnPos;
-		_parentPlayer.Velocity = Vector3.Zero;
-		
-		GD.Print("I have respawned at: " + respawnPos);
+
+		_parentPlayer.Visible = true;
+		_parentPlayer.SetCollisionLayerValue(1, true);
+		_parentPlayer.SetCollisionMaskValue(1, true);
+
+		if (_parentPlayer.GetMultiplayerAuthority() == Multiplayer.GetUniqueId())
+		{
+			_parentPlayer.GlobalPosition = respawnPos;
+			_parentPlayer.Velocity = Vector3.Zero;
+
+			Camera3D mainCam = _parentPlayer.GetNodeOrNull<Camera3D>("CameraPivot/Camera3D");
+			if (mainCam != null) mainCam.Current = true;
+		}
 	}
 
 	[Rpc(MultiplayerApi.RpcMode.AnyPeer, CallLocal = true)]
@@ -95,8 +112,40 @@ public partial class HealthComponent : Node
 	[Rpc(MultiplayerApi.RpcMode.AnyPeer, CallLocal = true)]
 	private void BroadcastKillfeed(long killerId, long victimId, string weaponName)
 	{
+		if (Multiplayer.GetRemoteSenderId() != 1 && Multiplayer.GetRemoteSenderId() != 0) return;
+
 		string killerName = GameManager.Players.ContainsKey(killerId) ? GameManager.Players[killerId].Name : "Unknown";
 		string victimName = GameManager.Players.ContainsKey(victimId) ? GameManager.Players[victimId].Name : "Unknown";
 		EventBus.OnPlayerKilled?.Invoke(killerId, killerName, victimId, victimName, weaponName);
+	}
+	
+	[Rpc(MultiplayerApi.RpcMode.AnyPeer, CallLocal = true)]
+	private void BroadcastDeathPhysics(Vector3 knockbackDir)
+	{
+		if (Multiplayer.GetRemoteSenderId() != 1 && Multiplayer.GetRemoteSenderId() != 0) return;
+
+		_parentPlayer.Visible = false;
+		_parentPlayer.SetCollisionLayerValue(1, false);
+		_parentPlayer.Velocity = Vector3.Zero;
+
+		if (_corpseScene != null)
+		{
+			Corpse corpse = _corpseScene.Instantiate<Corpse>();
+			GetTree().CurrentScene.AddChild(corpse);
+			corpse.GlobalPosition = _parentPlayer.GlobalPosition;
+
+			float flingForce = 25.0f;
+			Vector3 forceToApply = knockbackDir * flingForce;
+			Vector3 hitOffset = new Vector3(0, 0.1f, 0);
+			corpse.ApplyImpulse(forceToApply, hitOffset);
+			corpse.ApplyTorqueImpulse(new Vector3((float)GD.RandRange(-1, 1), (float)GD.RandRange(-1, 1), (float)GD.RandRange(-1, 1)));
+
+			if (_parentPlayer.GetMultiplayerAuthority() == Multiplayer.GetUniqueId())
+			{
+				Camera3D mainCam = _parentPlayer.GetNodeOrNull<Camera3D>("CameraPivot/Camera3D");
+				if (mainCam != null) mainCam.Current = false;
+				corpse.ActivateCamera();
+			}
+		}
 	}
 }
