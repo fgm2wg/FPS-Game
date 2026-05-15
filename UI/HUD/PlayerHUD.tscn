@@ -45,9 +45,6 @@ corner_radius_bottom_right = 6
 corner_radius_bottom_left = 6
 corner_detail = 6
 
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_3bpb7"]
-load_path = "res://.godot/imported/a10_icon.png-4f3b3020205638467cef61e25b6cfb1a.ctex"
-
 [sub_resource type="LabelSettings" id="LabelSettings_yw7l5"]
 font_size = 20
 outline_size = 1
@@ -204,7 +201,7 @@ layout_mode = 2
 texture_filter = 6
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
-texture = SubResource("CompressedTexture2D_3bpb7")
+texture = ExtResource("3_yw7l5")
 expand_mode = 1
 stretch_mode = 5
 

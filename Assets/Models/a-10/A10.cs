@@ -94,7 +94,7 @@ public partial class A10 : Node3D
 			BulletTracer tracer = TracerScene.Instantiate<BulletTracer>();
 			GetTree().CurrentScene.AddChild(tracer);
 			
-			tracer.Scale = new Vector3(5f, 5f, 5f);
+			tracer.Scale = new Vector3(10f, 10f, 10f);
 			tracer.Setup(Muzzle.GlobalPosition, endPos, BulletSpeed);
 			
 			if (Multiplayer.IsServer())
