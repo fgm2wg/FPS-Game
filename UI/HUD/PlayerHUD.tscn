@@ -1,16 +1,9 @@
 [gd_scene format=3 uid="uid://byp5f8j84i66t"]
 
-[ext_resource type="Texture2D" uid="uid://cyoh37cxayjbd" path="res://Entities/Weapons/BaseWeapon/BaseWeaponIcon.png" id="1_22i0t"]
+[ext_resource type="Texture2D" uid="uid://cyoh37cxayjbd" path="res://Assets/Icons/mp5_icon.png" id="1_22i0t"]
 [ext_resource type="Script" uid="uid://tdlgsqg65uqp" path="res://UI/HUD/PlayerHUD.cs" id="1_vffar"]
 [ext_resource type="PackedScene" uid="uid://duywvfu11tor7" path="res://UI/HUD/KillfeedEntry.tscn" id="2_miet7"]
-
-[sub_resource type="LabelSettings" id="LabelSettings_yw7l5"]
-font_size = 20
-outline_size = 1
-
-[sub_resource type="LabelSettings" id="LabelSettings_3bpb7"]
-font_size = 20
-outline_size = 1
+[ext_resource type="Texture2D" uid="uid://daqups0pmm8ck" path="res://Assets/Icons/a10_icon.png" id="3_yw7l5"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_miet7"]
 content_margin_left = 2.0
@@ -40,7 +33,30 @@ corner_detail = 6
 font_size = 20
 outline_size = 1
 
-[node name="PlayerHUD" type="CanvasLayer" unique_id=1619948193 node_paths=PackedStringArray("_crosshair", "_ammoLabel", "_fireModeLabel", "_killfeedContainer", "_healthBar", "_healthBarLabel")]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3bpb7"]
+content_margin_left = 2.0
+content_margin_top = 2.0
+content_margin_right = 2.0
+content_margin_bottom = 2.0
+bg_color = Color(1, 0.52156866, 0.101960786, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+corner_detail = 6
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_3bpb7"]
+load_path = "res://.godot/imported/a10_icon.png-4f3b3020205638467cef61e25b6cfb1a.ctex"
+
+[sub_resource type="LabelSettings" id="LabelSettings_yw7l5"]
+font_size = 20
+outline_size = 1
+
+[sub_resource type="LabelSettings" id="LabelSettings_3bpb7"]
+font_size = 20
+outline_size = 1
+
+[node name="PlayerHUD" type="CanvasLayer" unique_id=1619948193 node_paths=PackedStringArray("_crosshair", "_ammoLabel", "_fireModeLabel", "_killfeedContainer", "_healthBar", "_healthBarLabel", "_scoreProgressBar", "_streak1Icon", "_streak2Icon", "_streak3Icon")]
 script = ExtResource("1_vffar")
 _crosshair = NodePath("CenterContainer/Crosshair")
 _ammoLabel = NodePath("BottomRight/HBoxContainer/AmmoLabel")
@@ -49,6 +65,10 @@ _killfeedContainer = NodePath("TopRight/KillfeedContainer")
 _killfeedEntryScene = ExtResource("2_miet7")
 _healthBar = NodePath("BottomLeft/HealthBar")
 _healthBarLabel = NodePath("BottomLeft/HealthBar/MarginContainer/HealthBarLabel")
+_scoreProgressBar = NodePath("CenterRight/HBoxContainer/ProgressBar")
+_streak1Icon = NodePath("CenterRight/HBoxContainer/VBoxContainer/TextureRect3")
+_streak2Icon = NodePath("CenterRight/HBoxContainer/VBoxContainer/TextureRect2")
+_streak3Icon = NodePath("CenterRight/HBoxContainer/VBoxContainer/TextureRect")
 
 [node name="CenterContainer" type="CenterContainer" parent="." unique_id=1798592802]
 anchors_preset = 15
@@ -63,6 +83,159 @@ custom_minimum_size = Vector2(2, 2)
 layout_mode = 2
 mouse_filter = 2
 color = Color(0, 1, 1, 1)
+
+[node name="BottomLeft" type="MarginContainer" parent="." unique_id=627231286]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -40.0
+offset_right = 40.0
+grow_vertical = 0
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="HealthBar" type="ProgressBar" parent="BottomLeft" unique_id=1327811781]
+custom_minimum_size = Vector2(300, 30)
+layout_mode = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_miet7")
+theme_override_styles/fill = SubResource("StyleBoxFlat_yw7l5")
+value = 100.0
+show_percentage = false
+
+[node name="MarginContainer" type="MarginContainer" parent="BottomLeft/HealthBar" unique_id=474749704]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -40.0
+offset_top = -20.0
+offset_bottom = 20.0
+grow_horizontal = 0
+grow_vertical = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="HealthBarLabel" type="Label" parent="BottomLeft/HealthBar/MarginContainer" unique_id=1602138824]
+layout_mode = 2
+text = "100 / 100"
+label_settings = SubResource("LabelSettings_miet7")
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="TopRight" type="MarginContainer" parent="." unique_id=1464800917]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -40.0
+offset_bottom = 40.0
+grow_horizontal = 0
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="KillfeedContainer" type="VBoxContainer" parent="TopRight" unique_id=269790557]
+layout_mode = 2
+
+[node name="CenterRight" type="MarginContainer" parent="." unique_id=2106569882]
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -40.0
+offset_top = -20.0
+offset_bottom = 20.0
+grow_horizontal = 0
+grow_vertical = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CenterRight" unique_id=523064283]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="ProgressBar" type="ProgressBar" parent="CenterRight/HBoxContainer" unique_id=782419835]
+custom_minimum_size = Vector2(20, 0)
+layout_mode = 2
+size_flags_vertical = 1
+theme_override_styles/fill = SubResource("StyleBoxFlat_3bpb7")
+max_value = 1000.0
+step = 1.0
+fill_mode = 3
+show_percentage = false
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterRight/HBoxContainer" unique_id=273016773]
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_constants/separation = 10
+
+[node name="TextureRect" type="TextureRect" parent="CenterRight/HBoxContainer/VBoxContainer" unique_id=2138265080]
+texture_filter = 6
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+texture = ExtResource("3_yw7l5")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="HSeparator" type="HSeparator" parent="CenterRight/HBoxContainer/VBoxContainer" unique_id=759730239]
+layout_mode = 2
+
+[node name="TextureRect2" type="TextureRect" parent="CenterRight/HBoxContainer/VBoxContainer" unique_id=724845156]
+texture_filter = 6
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+texture = ExtResource("3_yw7l5")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="HSeparator2" type="HSeparator" parent="CenterRight/HBoxContainer/VBoxContainer" unique_id=509333435]
+layout_mode = 2
+
+[node name="TextureRect3" type="TextureRect" parent="CenterRight/HBoxContainer/VBoxContainer" unique_id=1276703396]
+texture_filter = 6
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+texture = SubResource("CompressedTexture2D_3bpb7")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="CenterRight/HBoxContainer" unique_id=1118128636]
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_constants/separation = 24
+
+[node name="TextLabel" type="Label" parent="CenterRight/HBoxContainer/VBoxContainer2" unique_id=856524808]
+texture_filter = 6
+custom_minimum_size = Vector2(0, 64)
+layout_mode = 2
+size_flags_horizontal = 0
+text = "3"
+vertical_alignment = 1
+
+[node name="TextLabel2" type="Label" parent="CenterRight/HBoxContainer/VBoxContainer2" unique_id=260128848]
+texture_filter = 6
+custom_minimum_size = Vector2(0, 64)
+layout_mode = 2
+size_flags_horizontal = 0
+text = "2"
+vertical_alignment = 1
+
+[node name="TextLabel3" type="Label" parent="CenterRight/HBoxContainer/VBoxContainer2" unique_id=543395407]
+texture_filter = 6
+custom_minimum_size = Vector2(0, 64)
+layout_mode = 2
+size_flags_horizontal = 0
+text = "1"
+vertical_alignment = 1
 
 [node name="BottomRight" type="MarginContainer" parent="." unique_id=430653606]
 anchors_preset = 3
@@ -114,62 +287,3 @@ custom_minimum_size = Vector2(45, 0)
 layout_mode = 2
 text = "Auto"
 label_settings = SubResource("LabelSettings_3bpb7")
-
-[node name="TopRight" type="MarginContainer" parent="." unique_id=1464800917]
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -40.0
-offset_bottom = 40.0
-grow_horizontal = 0
-theme_override_constants/margin_left = 20
-theme_override_constants/margin_top = 20
-theme_override_constants/margin_right = 20
-theme_override_constants/margin_bottom = 20
-
-[node name="KillfeedContainer" type="VBoxContainer" parent="TopRight" unique_id=269790557]
-layout_mode = 2
-
-[node name="BottomLeft" type="MarginContainer" parent="." unique_id=627231286]
-anchors_preset = 2
-anchor_top = 1.0
-anchor_bottom = 1.0
-offset_top = -40.0
-offset_right = 40.0
-grow_vertical = 0
-theme_override_constants/margin_left = 20
-theme_override_constants/margin_top = 20
-theme_override_constants/margin_right = 20
-theme_override_constants/margin_bottom = 20
-
-[node name="HealthBar" type="ProgressBar" parent="BottomLeft" unique_id=1327811781]
-custom_minimum_size = Vector2(300, 30)
-layout_mode = 2
-theme_override_styles/background = SubResource("StyleBoxFlat_miet7")
-theme_override_styles/fill = SubResource("StyleBoxFlat_yw7l5")
-value = 100.0
-show_percentage = false
-
-[node name="MarginContainer" type="MarginContainer" parent="BottomLeft/HealthBar" unique_id=474749704]
-layout_mode = 1
-anchors_preset = 6
-anchor_left = 1.0
-anchor_top = 0.5
-anchor_right = 1.0
-anchor_bottom = 0.5
-offset_left = -40.0
-offset_top = -20.0
-offset_bottom = 20.0
-grow_horizontal = 0
-grow_vertical = 2
-theme_override_constants/margin_left = 10
-theme_override_constants/margin_top = 10
-theme_override_constants/margin_right = 10
-theme_override_constants/margin_bottom = 10
-
-[node name="HealthBarLabel" type="Label" parent="BottomLeft/HealthBar/MarginContainer" unique_id=1602138824]
-layout_mode = 2
-text = "100 / 100"
-label_settings = SubResource("LabelSettings_miet7")
-horizontal_alignment = 2
-vertical_alignment = 1

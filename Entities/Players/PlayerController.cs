@@ -9,6 +9,14 @@ public partial class PlayerController : CharacterBody3D
 	[Export] private Node3D _playerBody;
 	[Export] private BaseWeapon _equippedWeapon;
 	[Export] private CanvasLayer _playerHUD;
+	
+	[ExportCategory("Aiming Setup")]
+	[Export] private Node3D _weaponMount;
+	[Export] private float _aimSpeed = 15.0f;
+	
+	private Vector3 _hipPosition = new Vector3(0.25f, -0.2f, -0.5f);
+	private Vector3 _aimPosition = new Vector3(0.0f, -0.068f, -0.4f);
+	private bool _isAiming = false;
 
 	public override void _EnterTree()
 	{
@@ -85,6 +93,12 @@ public partial class PlayerController : CharacterBody3D
 				_equippedWeapon.AttemptShoot();
 			}
 		}
+		
+		Vector3 targetPosition = _isAiming ? _aimPosition : _hipPosition;
+		if (_weaponMount != null)
+		{
+			_weaponMount.Position = _weaponMount.Position.Lerp(targetPosition, (float)delta * _aimSpeed);
+		}
 	}
 
 	public override void _UnhandledInput(InputEvent @event)
@@ -127,6 +141,11 @@ public partial class PlayerController : CharacterBody3D
 		{
 			Input.MouseMode = Input.MouseModeEnum.Captured;
 			EventBus.OnPauseMenuToggled?.Invoke(false);
+		}
+		
+		if (@event is InputEventMouseButton mouseEvent && mouseEvent.ButtonIndex == MouseButton.Right)
+		{
+			_isAiming = mouseEvent.Pressed;
 		}
 	}
 	

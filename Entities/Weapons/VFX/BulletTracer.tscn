@@ -47,6 +47,7 @@ transform = Transform3D(0.05, 0, 0, 0, 0.05, 0, 0, 0, 0.25, 0, 0, 0)
 mesh = SubResource("BoxMesh_8hiss")
 
 [node name="Trail" type="GPUParticles3D" parent="." unique_id=129020227]
+visible = false
 amount = 10
 lifetime = 0.2
 process_material = SubResource("ParticleProcessMaterial_8hiss")

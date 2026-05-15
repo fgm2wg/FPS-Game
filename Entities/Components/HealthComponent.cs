@@ -25,6 +25,8 @@ public partial class HealthComponent : Node
 	public void RequestTakeDamage(float amount, long shooterId, string weaponName, Vector3 shooterPos)
 	{
 		if (!Multiplayer.IsServer()) return;
+		
+		if (CurrentHealth <= 0) return;
 
 		long myId = long.Parse(_parentPlayer.Name);
 

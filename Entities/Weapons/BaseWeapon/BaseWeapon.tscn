@@ -4,7 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://cqp8iqv603ulr" path="res://Entities/Weapons/VFX/BulletTracer.tscn" id="2_o38gh"]
 [ext_resource type="AudioStream" uid="uid://ckq1msflkiley" path="res://Entities/Weapons/BaseWeapon/BaseWeaponShootSound.mp3" id="2_r8vcn"]
 [ext_resource type="AudioStream" uid="uid://dk8f8xn85b4dy" path="res://Entities/Weapons/BaseWeapon/BaseWeaponReloadSound.mp3" id="3_8y4d0"]
-[ext_resource type="PackedScene" uid="uid://cvat7ysnsoq6e" path="res://Assets/Models/mp5.glb" id="3_il7hs"]
+[ext_resource type="PackedScene" uid="uid://cvat7ysnsoq6e" path="res://Assets/Models/mp5/mp5.glb" id="3_il7hs"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_3ihlh"]
 
@@ -37,8 +37,8 @@ _tracerScene = ExtResource("2_o38gh")
 _muzzlePoint = NodePath("Muzzle")
 _muzzleFlash = NodePath("Muzzle/MuzzleFlash")
 
-[node name="mp5" parent="." unique_id=774961396 instance=ExtResource("3_il7hs")]
-transform = Transform3D(-0.15, 0, -1.3113417e-08, 0, 0.15, 0, 1.3113417e-08, 0, -0.15, 0, -0.087, -0.225)
+[node name="mp5" parent="." unique_id=783839964 instance=ExtResource("3_il7hs")]
+transform = Transform3D(0.15, 0, 0, 0, 0.15, 0, 0, 0, 0.15, 0, -0.053537887, -0.15)
 
 [node name="GunMesh" type="MeshInstance3D" parent="." unique_id=68979632]
 transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.6, 0, 0, -0.3)
@@ -61,6 +61,7 @@ target_position = Vector3(0, 0, -1000)
 
 [node name="ShootAudio" type="AudioStreamPlayer3D" parent="." unique_id=933998476]
 stream = ExtResource("2_r8vcn")
+max_distance = 500.0
 max_polyphony = 10
 
 [node name="ReloadAudio" type="AudioStreamPlayer3D" parent="." unique_id=422734376]

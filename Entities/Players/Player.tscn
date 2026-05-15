@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://bigynjo84xxm4" path="res://UI/DamageIndicator/DamageIndicator.tscn" id="6_noust"]
 [ext_resource type="PackedScene" uid="uid://cpu062locbeaf" path="res://Entities/Players/Corpse.tscn" id="7_2subl"]
 [ext_resource type="PackedScene" uid="uid://byp5f8j84i66t" path="res://UI/HUD/PlayerHUD.tscn" id="7_n4j1o"]
+[ext_resource type="Script" uid="uid://cif1xhy6qv0cw" path="res://Entities/Players/ScorestreakComponent.cs" id="8_mi14e"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_mq5ly"]
 
@@ -53,7 +54,7 @@ properties/1/path = NodePath(".:rotation")
 properties/1/spawn = true
 properties/1/replication_mode = 1
 
-[node name="Player" type="CharacterBody3D" unique_id=1560874725 node_paths=PackedStringArray("_camera", "_movementComponent", "_nameBillboard", "_playerBody", "_equippedWeapon", "_playerHUD")]
+[node name="Player" type="CharacterBody3D" unique_id=1560874725 node_paths=PackedStringArray("_camera", "_movementComponent", "_nameBillboard", "_playerBody", "_equippedWeapon", "_playerHUD", "_weaponMount") groups=["Player"]]
 script = ExtResource("1_41wu2")
 _camera = NodePath("CameraPivot/Camera3D")
 _movementComponent = NodePath("MovementComponent")
@@ -61,6 +62,7 @@ _nameBillboard = NodePath("PlayerNameLabel")
 _playerBody = NodePath("Body")
 _equippedWeapon = NodePath("CameraPivot/Camera3D/WeaponMount/BaseWeapon")
 _playerHUD = NodePath("PlayerHUD")
+_weaponMount = NodePath("CameraPivot/Camera3D/WeaponMount")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=2122354048]
 shape = SubResource("CapsuleShape3D_mq5ly")
@@ -123,6 +125,10 @@ script = ExtResource("2_1iada")
 script = ExtResource("5_n4urq")
 _damageIndicatorScene = ExtResource("6_noust")
 _corpseScene = ExtResource("7_2subl")
+
+[node name="ScorestreakComponent" type="Node" parent="." unique_id=2134629946 node_paths=PackedStringArray("_camera")]
+script = ExtResource("8_mi14e")
+_camera = NodePath("../CameraPivot/Camera3D")
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="." unique_id=440234245]
 replication_config = SubResource("SceneReplicationConfig_41wu2")

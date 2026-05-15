@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://duywvfu11tor7"]
 
-[ext_resource type="Texture2D" uid="uid://cyoh37cxayjbd" path="res://Entities/Weapons/BaseWeapon/BaseWeaponIcon.png" id="1_lt1tf"]
+[ext_resource type="Texture2D" uid="uid://cyoh37cxayjbd" path="res://Assets/Icons/mp5_icon.png" id="1_lt1tf"]
 [ext_resource type="Script" uid="uid://bhryhof7byud8" path="res://UI/HUD/KillfeedEntry.cs" id="1_wd6mj"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_lt1tf"]

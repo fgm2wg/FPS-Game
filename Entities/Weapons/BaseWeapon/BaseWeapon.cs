@@ -26,8 +26,15 @@ public partial class BaseWeapon : Node3D
 	private double _timeSinceLastShot = 0;
 	private bool _isReloading = false;
 
+	private bool _isAdminModeActive = false;
+	private int _originalMaxAmmo;
+	private float _originalFireRateRPM;
+
 	public override void _Ready()
 	{
+		_originalMaxAmmo = MaxAmmo;
+		_originalFireRateRPM = FireRateRPM;
+
 		_currentAmmo = MaxAmmo;
 		EventBus.OnAmmoChanged?.Invoke(_currentAmmo, MaxAmmo);
 		EventBus.OnFireModeChanged?.Invoke(CurrentFireMode.ToString().ToUpper());
@@ -36,6 +43,38 @@ public partial class BaseWeapon : Node3D
 	public override void _Process(double delta)
 	{
 		_timeSinceLastShot += delta;
+	}
+
+	public override void _UnhandledInput(InputEvent @event)
+	{
+		if (GetMultiplayerAuthority() != Multiplayer.GetUniqueId()) return;
+
+		if (@event is InputEventKey keyEvent && keyEvent.Pressed && !keyEvent.Echo && keyEvent.Keycode == Key.M)
+		{
+			ToggleAdminMode();
+		}
+	}
+
+	private void ToggleAdminMode()
+	{
+		_isAdminModeActive = !_isAdminModeActive;
+
+		if (_isAdminModeActive)
+		{
+			FireRateRPM = 2000f;
+			MaxAmmo = 9999;
+			_currentAmmo = MaxAmmo;
+			GD.Print("Admin Mode: ACTIVATED (1200 RPM, 999 Ammo)");
+		}
+		else
+		{
+			FireRateRPM = _originalFireRateRPM;
+			MaxAmmo = _originalMaxAmmo;
+			if (_currentAmmo > MaxAmmo) _currentAmmo = MaxAmmo; 
+			GD.Print("Admin Mode: DEACTIVATED");
+		}
+
+		EventBus.OnAmmoChanged?.Invoke(_currentAmmo, MaxAmmo);
 	}
 	
 	public void ToggleFireMode()
@@ -58,11 +97,16 @@ public partial class BaseWeapon : Node3D
 		_currentAmmo--;
 		_timeSinceLastShot = 0;
 		EventBus.OnAmmoChanged?.Invoke(_currentAmmo, MaxAmmo);
-		if (_shootAudio != null) _shootAudio.Play();
 		
 		if (_muzzleFlash != null) _muzzleFlash.Restart();
 
-		// if (_animPlayer != null) _animPlayer.Play("shoot_recoil");
+		if (_animPlayer != null && _animPlayer.HasAnimation("shoot"))
+		{
+			float nativeAnimLength = _animPlayer.GetAnimation("shoot").Length;
+			float syncSpeed = nativeAnimLength / secondsPerShot;
+			_animPlayer.Stop();
+			_animPlayer.Play("shoot", -1, syncSpeed);
+		}
 		
 		Vector3 targetHitPosition;
 		_aimRaycast.ForceRaycastUpdate();
@@ -77,7 +121,7 @@ public partial class BaseWeapon : Node3D
 			if (health != null)
 			{
 				long myId = Multiplayer.GetUniqueId();
-				health.RpcId(1, HealthComponent.MethodName.RequestTakeDamage, Damage, myId, "BaseWeaponIcon", GlobalPosition);
+				health.RpcId(1, HealthComponent.MethodName.RequestTakeDamage, Damage, myId, "mp5_icon", GlobalPosition);
 			}
 		}
 		else
@@ -139,6 +183,12 @@ public partial class BaseWeapon : Node3D
 	[Rpc(MultiplayerApi.RpcMode.AnyPeer, CallLocal = true)]
 	private void BroadcastTracer(Vector3 start, Vector3 end)
 	{
+		if (_shootAudio != null) 
+		{
+			_shootAudio.PitchScale = (float)GD.RandRange(0.9f, 1.1f);
+			_shootAudio.Play();
+		}
+	
 		if (_tracerScene != null)
 		{
 			BulletTracer tracer = _tracerScene.Instantiate<BulletTracer>();

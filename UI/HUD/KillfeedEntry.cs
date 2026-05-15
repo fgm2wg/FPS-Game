@@ -11,7 +11,7 @@ public partial class KillfeedEntry : HBoxContainer
 		killerLabel.Text = killerName;
 		victimLabel.Text = victimName;
 		
-		string iconPath = $"res://Assets/UI/Weapons/BaseWeapon/{weaponName}.png";
+		string iconPath = $"res://Assets/Icons/{weaponName}.png";
 		if (ResourceLoader.Exists(iconPath))
 		{
 			weaponIcon.Texture = GD.Load<Texture2D>(iconPath);

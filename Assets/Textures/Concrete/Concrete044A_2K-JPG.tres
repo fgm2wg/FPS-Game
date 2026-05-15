@@ -1,0 +1,25 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://bwypkipuko7ox"]
+
+[ext_resource type="Texture2D" uid="uid://ct1gyagcmfs1k" path="res://Assets/Textures/Concrete/Concrete044A_2K-JPG_AmbientOcclusion.jpg" id="AmbientOcclusion"]
+[ext_resource type="Texture2D" uid="uid://cgg1q67hagsqb" path="res://Assets/Textures/Concrete/Concrete044A_2K-JPG_Color.jpg" id="Color"]
+[ext_resource type="Texture2D" uid="uid://c7rchu3m2xwdw" path="res://Assets/Textures/Concrete/Concrete044A_2K-JPG_Displacement.jpg" id="Displacement"]
+[ext_resource type="Texture2D" uid="uid://dx156g36t3jr5" path="res://Assets/Textures/Concrete/Concrete044A_2K-JPG_Metalness.jpg" id="Metalness"]
+[ext_resource type="Texture2D" uid="uid://cu0n01te2vjcw" path="res://Assets/Textures/Concrete/Concrete044A_2K-JPG_NormalGL.jpg" id="NormalGL"]
+[ext_resource type="Texture2D" uid="uid://bhwf7f2nffvc4" path="res://Assets/Textures/Concrete/Concrete044A_2K-JPG_Roughness.jpg" id="Roughness"]
+
+[resource]
+albedo_texture = ExtResource("Color")
+metallic = 1.0
+metallic_texture = ExtResource("Metalness")
+metallic_texture_channel = 4
+roughness_texture = ExtResource("Roughness")
+roughness_texture_channel = 4
+normal_enabled = true
+normal_texture = ExtResource("NormalGL")
+ao_enabled = true
+ao_texture = ExtResource("AmbientOcclusion")
+ao_texture_channel = 4
+heightmap_enabled = true
+heightmap_scale = 1.0
+heightmap_texture = ExtResource("Displacement")
+uv1_scale = Vector3(20, 5, 20)

@@ -2,34 +2,150 @@
 
 [ext_resource type="Script" uid="uid://j08htyw704lb" path="res://Levels/MainMap.cs" id="1_k2731"]
 [ext_resource type="PackedScene" uid="uid://bqxv3umdhq1e0" path="res://Entities/Players/Player.tscn" id="2_edq0r"]
-[ext_resource type="Texture2D" uid="uid://cv8t1bfitcwaf" path="res://Assets/Textures/PavingStones/PavingStones150_1K-JPG_Color.jpg" id="3_1xwcd"]
+[ext_resource type="Sky" uid="uid://cp0r85q288rwd" path="res://Assets/Textures/Skybox/DaySkyHDRI063B_2K.tres" id="3_0y3mc"]
 [ext_resource type="PackedScene" uid="uid://brepdy3wjbdg0" path="res://UI/PauseMenu/PauseMenu.tscn" id="3_yckqg"]
-[ext_resource type="Texture2D" uid="uid://c3xnayo7pirjo" path="res://Assets/Textures/PavingStones/PavingStones150_1K-JPG_AmbientOcclusion.jpg" id="4_17i70"]
+[ext_resource type="Texture2D" uid="uid://dpm1o6usi14tq" path="res://Assets/Textures/Grass/Grass001_2K-JPG_Color.jpg" id="4_jlf3l"]
 [ext_resource type="PackedScene" uid="uid://dduyc0q4o7llt" path="res://UI/FPSOverlay/FPSOverlay.tscn" id="4_rryg2"]
-[ext_resource type="Texture2D" uid="uid://duqebfjqsgltk" path="res://Assets/Textures/PavingStones/PavingStones150_1K-JPG_NormalGL.jpg" id="5_0y3mc"]
-[ext_resource type="Texture2D" uid="uid://nxu3imy5jmcp" path="res://Assets/Textures/PavingStones/PavingStones150_1K-JPG_Roughness.jpg" id="6_uvywi"]
-[ext_resource type="Texture2D" uid="uid://dl8mq7l0e0sid" path="res://Assets/Textures/Bricks/Bricks094_1K-JPG_Color.jpg" id="7_ch1hg"]
-[ext_resource type="Texture2D" uid="uid://b1ufrxboe7rx8" path="res://Assets/Textures/Bricks/Bricks094_1K-JPG_AmbientOcclusion.jpg" id="8_f8qa8"]
-[ext_resource type="Texture2D" uid="uid://ker0trmnxmj2" path="res://Assets/Textures/Bricks/Bricks094_1K-JPG_NormalGL.jpg" id="9_gxscw"]
-[ext_resource type="Texture2D" uid="uid://bxf2jglu7p20l" path="res://Assets/Textures/Bricks/Bricks094_1K-JPG_Roughness.jpg" id="10_a0sqh"]
+[ext_resource type="Texture2D" uid="uid://bohslad1e16bc" path="res://Assets/Textures/Grass/Grass001_2K-JPG_AmbientOcclusion.jpg" id="5_ur58j"]
+[ext_resource type="Texture2D" uid="uid://dgsjnwmfexti6" path="res://Assets/Textures/Grass/Grass001_2K-JPG_Displacement.jpg" id="6_epkik"]
+[ext_resource type="Texture2D" uid="uid://svaldtb4r7yg" path="res://Assets/Textures/Grass/Grass001_2K-JPG_NormalGL.jpg" id="7_hig57"]
+[ext_resource type="Texture2D" uid="uid://beinbnyhoufbi" path="res://Assets/Textures/Grass/Grass001_2K-JPG_Roughness.jpg" id="8_s6sao"]
+[ext_resource type="Texture2D" uid="uid://cgg1q67hagsqb" path="res://Assets/Textures/Concrete/Concrete044A_2K-JPG_Color.jpg" id="9_10qqw"]
+[ext_resource type="Texture2D" uid="uid://ct1gyagcmfs1k" path="res://Assets/Textures/Concrete/Concrete044A_2K-JPG_AmbientOcclusion.jpg" id="10_tancx"]
+[ext_resource type="Texture2D" uid="uid://c7rchu3m2xwdw" path="res://Assets/Textures/Concrete/Concrete044A_2K-JPG_Displacement.jpg" id="11_37sir"]
+[ext_resource type="Texture2D" uid="uid://dx156g36t3jr5" path="res://Assets/Textures/Concrete/Concrete044A_2K-JPG_Metalness.jpg" id="12_f4soh"]
+[ext_resource type="Texture2D" uid="uid://cu0n01te2vjcw" path="res://Assets/Textures/Concrete/Concrete044A_2K-JPG_NormalGL.jpg" id="13_uuq0k"]
+[ext_resource type="Texture2D" uid="uid://bhwf7f2nffvc4" path="res://Assets/Textures/Concrete/Concrete044A_2K-JPG_Roughness.jpg" id="14_kwc3p"]
+[ext_resource type="Texture2D" uid="uid://braaienrrta3q" path="res://Assets/Textures/Metal/Metal053C_2K-JPG_Color.jpg" id="15_10qqw"]
+[ext_resource type="Texture2D" uid="uid://bbdlg43lpc4ct" path="res://Assets/Textures/Metal/Metal053C_2K-JPG_Displacement.jpg" id="16_tancx"]
+[ext_resource type="Texture2D" uid="uid://yd2p1a2isb52" path="res://Assets/Textures/Metal/Metal053C_2K-JPG_Metalness.jpg" id="17_37sir"]
+[ext_resource type="Texture2D" uid="uid://dtvihenn8ukkh" path="res://Assets/Textures/Metal/Metal053C_2K-JPG_NormalGL.jpg" id="18_f4soh"]
+[ext_resource type="Texture2D" uid="uid://8qm1cs8neoc1" path="res://Assets/Textures/Metal/Metal053C_2K-JPG_Roughness.jpg" id="19_uuq0k"]
+[ext_resource type="Texture2D" uid="uid://cwlwt4x7tjfe6" path="res://Assets/Textures/MetalPlates/MetalPlates001_2K-JPG_Color.jpg" id="20_kwc3p"]
+[ext_resource type="Texture2D" uid="uid://daxyrdte2nmdu" path="res://Assets/Textures/MetalPlates/MetalPlates001_2K-JPG_Displacement.jpg" id="21_5u7w7"]
+[ext_resource type="Texture2D" uid="uid://c7fwh47o0txul" path="res://Assets/Textures/MetalPlates/MetalPlates001_2K-JPG_Metalness.jpg" id="22_e3j3a"]
+[ext_resource type="Texture2D" uid="uid://d060shhau86d4" path="res://Assets/Textures/MetalPlates/MetalPlates001_2K-JPG_NormalGL.jpg" id="23_qq5y4"]
+[ext_resource type="Texture2D" uid="uid://cms4k0k1gid50" path="res://Assets/Textures/MetalPlates/MetalPlates001_2K-JPG_Roughness.jpg" id="24_ii2s3"]
+[ext_resource type="PackedScene" uid="uid://d1l7vch1vtbwv" path="res://Assets/Models/PalmTree/PalmTree.tscn" id="25_5u7w7"]
+[ext_resource type="PackedScene" uid="uid://di6y31jibkhyn" path="res://Assets/Models/a-10/a_10.tscn" id="28_e3j3a"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rryg2"]
-albedo_texture = ExtResource("3_1xwcd")
-roughness_texture = ExtResource("6_uvywi")
+[sub_resource type="Environment" id="Environment_jlf3l"]
+background_mode = 2
+sky = ExtResource("3_0y3mc")
+sky_rotation = Vector3(0, 0.7853982, 0)
+tonemap_mode = 3
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5u7w7"]
+albedo_texture = ExtResource("4_jlf3l")
+roughness_texture = ExtResource("8_s6sao")
+roughness_texture_channel = 4
 normal_enabled = true
-normal_texture = ExtResource("5_0y3mc")
+normal_texture = ExtResource("7_hig57")
 ao_enabled = true
-ao_texture = ExtResource("4_17i70")
+ao_texture = ExtResource("5_ur58j")
+ao_texture_channel = 4
+heightmap_enabled = true
+heightmap_scale = 0.01
+heightmap_deep_parallax = true
+heightmap_min_layers = 8
+heightmap_max_layers = 32
+heightmap_texture = ExtResource("6_epkik")
 uv1_scale = Vector3(50, 50, 50)
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8lf85"]
-albedo_texture = ExtResource("7_ch1hg")
-roughness_texture = ExtResource("10_a0sqh")
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_a4cft"]
+albedo_texture = ExtResource("9_10qqw")
+metallic = 1.0
+metallic_texture = ExtResource("12_f4soh")
+metallic_texture_channel = 4
+roughness_texture = ExtResource("14_kwc3p")
+roughness_texture_channel = 4
 normal_enabled = true
-normal_texture = ExtResource("9_gxscw")
+normal_texture = ExtResource("13_uuq0k")
 ao_enabled = true
-ao_texture = ExtResource("8_f8qa8")
-uv1_scale = Vector3(0.2, 0.2, 0.2)
+ao_texture = ExtResource("10_tancx")
+ao_texture_channel = 4
+heightmap_enabled = true
+heightmap_scale = 1.0
+heightmap_texture = ExtResource("11_37sir")
+uv1_scale = Vector3(16, 4, 16)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kwc3p"]
+albedo_texture = ExtResource("15_10qqw")
+metallic = 1.0
+metallic_texture = ExtResource("17_37sir")
+metallic_texture_channel = 4
+roughness_texture = ExtResource("19_uuq0k")
+roughness_texture_channel = 4
+normal_enabled = true
+normal_texture = ExtResource("18_f4soh")
+heightmap_enabled = true
+heightmap_scale = 1.0
+heightmap_texture = ExtResource("16_tancx")
+uv1_scale = Vector3(0.25, 0.25, 0.25)
+uv1_triplanar = true
+uv1_world_triplanar = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4etem"]
+albedo_texture = ExtResource("20_kwc3p")
+metallic = 1.0
+metallic_texture = ExtResource("22_e3j3a")
+metallic_texture_channel = 4
+roughness_texture = ExtResource("24_ii2s3")
+roughness_texture_channel = 4
+normal_enabled = true
+normal_texture = ExtResource("23_qq5y4")
+heightmap_enabled = true
+heightmap_scale = 1.0
+heightmap_texture = ExtResource("21_5u7w7")
+uv1_scale = Vector3(0.25, 0.25, 0.25)
+uv1_triplanar = true
+uv1_world_triplanar = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5s3iy"]
+albedo_texture = ExtResource("20_kwc3p")
+metallic = 1.0
+metallic_texture = ExtResource("22_e3j3a")
+metallic_texture_channel = 4
+roughness_texture = ExtResource("24_ii2s3")
+roughness_texture_channel = 4
+normal_enabled = true
+normal_texture = ExtResource("23_qq5y4")
+heightmap_enabled = true
+heightmap_scale = 1.0
+heightmap_texture = ExtResource("21_5u7w7")
+uv1_scale = Vector3(0.25, 0.25, 0.25)
+uv1_triplanar = true
+uv1_world_triplanar = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_h3rws"]
+albedo_texture = ExtResource("20_kwc3p")
+metallic = 1.0
+metallic_texture = ExtResource("22_e3j3a")
+metallic_texture_channel = 4
+roughness_texture = ExtResource("24_ii2s3")
+roughness_texture_channel = 4
+normal_enabled = true
+normal_texture = ExtResource("23_qq5y4")
+heightmap_enabled = true
+heightmap_scale = 1.0
+heightmap_texture = ExtResource("21_5u7w7")
+uv1_scale = Vector3(0.25, 0.25, 0.25)
+uv1_triplanar = true
+uv1_world_triplanar = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_r1ukr"]
+albedo_texture = ExtResource("20_kwc3p")
+metallic = 1.0
+metallic_texture = ExtResource("22_e3j3a")
+metallic_texture_channel = 4
+roughness_texture = ExtResource("24_ii2s3")
+roughness_texture_channel = 4
+normal_enabled = true
+normal_texture = ExtResource("23_qq5y4")
+heightmap_enabled = true
+heightmap_scale = 1.0
+heightmap_texture = ExtResource("21_5u7w7")
+uv1_scale = Vector3(0.25, 0.25, 0.25)
 uv1_triplanar = true
 uv1_world_triplanar = true
 
@@ -37,27 +153,130 @@ uv1_world_triplanar = true
 script = ExtResource("1_k2731")
 _playersContainer = NodePath("PlayersContainer")
 _playerScene = ExtResource("2_edq0r")
+_a10Scene = ExtResource("28_e3j3a")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=2130551389]
-transform = Transform3D(0.70710677, -0.49999997, 0.49999997, 0, 0.70710677, 0.70710677, -0.70710677, -0.49999997, 0.49999997, 0, 0, 0)
+transform = Transform3D(0.7071067, -0.49999997, 0.4999999, 0, 0.70710665, 0.70710677, -0.7071067, -0.49999997, 0.4999999, 0, 0, 0)
 shadow_enabled = true
 
-[node name="CSGBox3D" type="CSGBox3D" parent="." unique_id=1450248325]
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=910722968]
+environment = SubResource("Environment_jlf3l")
+
+[node name="GrassFloor" type="CSGBox3D" parent="." unique_id=358493132]
 transform = Transform3D(500, 0, 0, 0, 1, 0, 0, 0, 500, 0, 0, 0)
 use_collision = true
-material = SubResource("StandardMaterial3D_rryg2")
+material = SubResource("StandardMaterial3D_5u7w7")
 
-[node name="MapObjects" type="Node3D" parent="." unique_id=129525344]
+[node name="BorderWalls" type="Node3D" parent="." unique_id=840588714]
 
-[node name="CSGBox3D" type="CSGBox3D" parent="MapObjects" unique_id=877611199]
-transform = Transform3D(10, 0, 0, 0, 2, 0, 0, 0, 10, 180, 1.5, -180)
+[node name="CSGBox3D" type="CSGBox3D" parent="BorderWalls" unique_id=514202327]
+transform = Transform3D(500, 0, 0, 0, 50, 0, 0, 0, 2, 0, 25, 250)
 use_collision = true
-material = SubResource("StandardMaterial3D_8lf85")
+material = SubResource("StandardMaterial3D_a4cft")
 
-[node name="CSGBox3D2" type="CSGBox3D" parent="MapObjects" unique_id=1612579798]
+[node name="CSGBox3D2" type="CSGBox3D" parent="BorderWalls" unique_id=1767899529]
+transform = Transform3D(500, 0, 0, 0, 50, 0, 0, 0, 2, 0, 25, -250)
+use_collision = true
+material = SubResource("StandardMaterial3D_a4cft")
+
+[node name="CSGBox3D3" type="CSGBox3D" parent="BorderWalls" unique_id=579544589]
+transform = Transform3D(-2.1855694e-05, 0, 2, 0, 50, 0, -500, 0, -8.742278e-08, -250, 25, 0)
+use_collision = true
+material = SubResource("StandardMaterial3D_a4cft")
+
+[node name="CSGBox3D4" type="CSGBox3D" parent="BorderWalls" unique_id=1259893187]
+transform = Transform3D(-2.1855694e-05, 0, 2, 0, 50, 0, -500, 0, -8.742278e-08, 250, 25, 0)
+use_collision = true
+material = SubResource("StandardMaterial3D_a4cft")
+
+[node name="Team1Objects" type="Node3D" parent="." unique_id=129525344]
+
+[node name="CSGBox3D" type="CSGBox3D" parent="Team1Objects" unique_id=877611199]
 transform = Transform3D(10, 0, 0, 0, 2, 0, 0, 0, 10, -180, 1.5, 180)
 use_collision = true
-material = SubResource("StandardMaterial3D_8lf85")
+material = SubResource("StandardMaterial3D_kwc3p")
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="Team1Objects" unique_id=37953437]
+transform = Transform3D(10, 0, 0, 0, 2, 0, 0, 0, 10, -180, 3.5, 170)
+use_collision = true
+size = Vector3(1, 3, 1)
+material = SubResource("StandardMaterial3D_kwc3p")
+
+[node name="CSGBox3D3" type="CSGBox3D" parent="Team1Objects" unique_id=472213163]
+transform = Transform3D(10, 0, 0, 0, 2, 0, 0, 0, 10, -170, 5.5, 170)
+use_collision = true
+size = Vector3(1, 5, 1)
+material = SubResource("StandardMaterial3D_kwc3p")
+
+[node name="CSGBox3D4" type="CSGBox3D" parent="Team1Objects" unique_id=1017552889]
+transform = Transform3D(10, 0, 0, 0, 2, 0, 0, 0, 10, -170, 7.5, 180)
+use_collision = true
+size = Vector3(1, 7, 1)
+material = SubResource("StandardMaterial3D_kwc3p")
+
+[node name="Team2Objects" type="Node3D" parent="." unique_id=212211260]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0, 0)
+
+[node name="CSGBox3D" type="CSGBox3D" parent="Team2Objects" unique_id=1219556546]
+transform = Transform3D(10, 0, 0, 0, 2, 0, 0, 0, 10, -180, 1.5, 180)
+use_collision = true
+material = SubResource("StandardMaterial3D_4etem")
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="Team2Objects" unique_id=474932820]
+transform = Transform3D(10, 0, 0, 0, 2, 0, 0, 0, 10, -180, 3.5, 170)
+use_collision = true
+size = Vector3(1, 3, 1)
+material = SubResource("StandardMaterial3D_5s3iy")
+
+[node name="CSGBox3D3" type="CSGBox3D" parent="Team2Objects" unique_id=833470105]
+transform = Transform3D(10, 0, 0, 0, 2, 0, 0, 0, 10, -170, 5.5, 170)
+use_collision = true
+size = Vector3(1, 5, 1)
+material = SubResource("StandardMaterial3D_h3rws")
+
+[node name="CSGBox3D4" type="CSGBox3D" parent="Team2Objects" unique_id=1102621309]
+transform = Transform3D(10, 0, 0, 0, 2, 0, 0, 0, 10, -170, 7.5, 180)
+use_collision = true
+size = Vector3(1, 7, 1)
+material = SubResource("StandardMaterial3D_r1ukr")
+
+[node name="Trees" type="Node3D" parent="." unique_id=1363980875]
+
+[node name="PalmTree" parent="Trees" unique_id=1902869169 instance=ExtResource("25_5u7w7")]
+transform = Transform3D(3.4641016, 0, -2, 0, 4, 0, 2, 0, 3.4641016, 0, 0, 0)
+
+[node name="PalmTree2" parent="Trees" unique_id=438573212 instance=ExtResource("25_5u7w7")]
+transform = Transform3D(-2.298097, 0, 2.298097, 0, 3.25, 0, -2.298097, 0, -2.298097, 16, 0, 23)
+
+[node name="PalmTree3" parent="Trees" unique_id=1157004352 instance=ExtResource("25_5u7w7")]
+transform = Transform3D(1.4999999, 0, 2.5980763, 0, 3, 0, -2.5980763, 0, 1.4999999, 4, 0, 13)
+
+[node name="PalmTree4" parent="Trees" unique_id=2146214229 instance=ExtResource("25_5u7w7")]
+transform = Transform3D(2.75, 0, 0, 0, 2.75, 0, 0, 0, 2.75, 24, 0, 7)
+
+[node name="PalmTree5" parent="Trees" unique_id=930439151 instance=ExtResource("25_5u7w7")]
+transform = Transform3D(0.6470477, 0, 2.4148145, 0, 2.5, 0, -2.4148145, 0, 0.6470477, 17, 0, -8)
+
+[node name="PalmTree6" parent="Trees" unique_id=55208843 instance=ExtResource("25_5u7w7")]
+transform = Transform3D(2.598076, 0, 1.5, 0, 3, 0, -1.5, 0, 2.598076, 31, 0, -5)
+
+[node name="PalmTree7" parent="Trees" unique_id=201436269 instance=ExtResource("25_5u7w7")]
+transform = Transform3D(-1.6250002, 0, -2.8145826, 0, 3.25, 0, 2.8145826, 0, -1.6250002, -40, 0, -16)
+
+[node name="PalmTree8" parent="Trees" unique_id=622595676 instance=ExtResource("25_5u7w7")]
+transform = Transform3D(2.5, 0, 0, 0, 2.5, 0, 0, 0, 2.5, -27, 0, -5)
+
+[node name="PalmTree9" parent="Trees" unique_id=925789493 instance=ExtResource("25_5u7w7")]
+transform = Transform3D(2.598076, 0, 1.5, 0, 3, 0, -1.5, 0, 2.598076, -37, 0, 7)
+
+[node name="PalmTree10" parent="Trees" unique_id=825709041 instance=ExtResource("25_5u7w7")]
+transform = Transform3D(0.7764572, 0, -2.8977776, 0, 3, 0, 2.8977776, 0, 0.7764572, -21, 0, 63)
+
+[node name="PalmTree11" parent="Trees" unique_id=847702509 instance=ExtResource("25_5u7w7")]
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, -46, 0, 32)
+
+[node name="PalmTree12" parent="Trees" unique_id=1225823929 instance=ExtResource("25_5u7w7")]
+transform = Transform3D(1.7499999, 0, 3.031089, 0, 3.5, 0, -3.031089, 0, 1.7499999, -40, 0, 44)
 
 [node name="PlayersContainer" type="Node3D" parent="." unique_id=367382922]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)

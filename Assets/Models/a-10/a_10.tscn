@@ -1,0 +1,37 @@
+[gd_scene format=3 uid="uid://di6y31jibkhyn"]
+
+[ext_resource type="PackedScene" uid="uid://dmy8cx5k0rbm3" path="res://Assets/Models/a-10/a-10_thunderbolt_ii_-_free.glb" id="1_nj7x0"]
+[ext_resource type="Script" uid="uid://cfrf47er112vj" path="res://Assets/Models/a-10/A10.cs" id="1_ww0xc"]
+[ext_resource type="PackedScene" uid="uid://cqp8iqv603ulr" path="res://Entities/Weapons/VFX/BulletTracer.tscn" id="2_x36jl"]
+[ext_resource type="AudioStream" uid="uid://3puweulf4pyq" path="res://Assets/Models/a-10/a10_gun_sound.mp3" id="4_qw5m5"]
+
+[node name="A10" type="Node3D" unique_id=741553261 node_paths=PackedStringArray("Muzzle", "GunAudio", "StrikeCamera")]
+script = ExtResource("1_ww0xc")
+TracerScene = ExtResource("2_x36jl")
+Muzzle = NodePath("Muzzle")
+GunAudio = NodePath("GunAudio")
+StrikeCamera = NodePath("Camera3D")
+
+[node name="Sketchfab_Scene" parent="." unique_id=2102886637 instance=ExtResource("1_nj7x0")]
+transform = Transform3D(-1.0927847e-08, 0, 0.25, 0, 0.25, 0, -0.25, 0, -1.0927847e-08, 0, 0, 0)
+
+[node name="A-10-landingOn_6" parent="Sketchfab_Scene/Sketchfab_model/root/GLTF_SceneRootNode" parent_id_path=PackedInt32Array(2102886637, 227320641) index="6" unique_id=1275427340]
+visible = false
+
+[node name="A-10-landingOnLight_7" parent="Sketchfab_Scene/Sketchfab_model/root/GLTF_SceneRootNode" parent_id_path=PackedInt32Array(2102886637, 227320641) index="7" unique_id=50737702]
+visible = false
+
+[node name="Muzzle" type="Marker3D" parent="." unique_id=1717301502]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.14679424, -0.15057436, -22.170692)
+
+[node name="GunAudio" type="AudioStreamPlayer3D" parent="." unique_id=1466722149]
+stream = ExtResource("4_qw5m5")
+volume_db = 15.0
+unit_size = 200.0
+max_db = 6.0
+max_distance = 4000.0
+
+[node name="Camera3D" type="Camera3D" parent="." unique_id=729542654]
+transform = Transform3D(1, 0, 0, 0, 0.9659259, 0.25881907, 0, -0.25881907, 0.9659258, 5, 1, -5)
+
+[editable path="Sketchfab_Scene"]
