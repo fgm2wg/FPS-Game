@@ -26,16 +26,29 @@ public partial class PlayerController : CharacterBody3D
 	public override void _Ready()
 	{
 		long myId = long.Parse(Name);
+		long localViewerId = Multiplayer.GetUniqueId();
 
-		if (GameManager.Players.ContainsKey(myId))
+		if (GameManager.Players.ContainsKey(myId) && GameManager.Players.ContainsKey(localViewerId))
 		{
 			PlayerData data = GameManager.Players[myId];
+			int myTeam = data.Team;
+			int localViewerTeam = GameManager.Players[localViewerId].Team;
+
 			_nameBillboard.Text = data.Name;
 
 			if (_playerBody is MeshInstance3D bodyMesh)
 			{
 				StandardMaterial3D teamMaterial = new StandardMaterial3D();
-				teamMaterial.AlbedoColor = data.Team == 0 ? Colors.Blue : Colors.Red;
+				
+				if (myTeam == localViewerTeam)
+				{
+					teamMaterial.AlbedoColor = Colors.Blue;
+				}
+				else
+				{
+					teamMaterial.AlbedoColor = Colors.Red;
+				}
+				
 				bodyMesh.MaterialOverride = teamMaterial;
 			}
 		}

@@ -147,10 +147,14 @@ public partial class HealthComponent : Node
 			corpse.GlobalPosition = _parentPlayer.GlobalPosition;
 			
 			long myId = long.Parse(_parentPlayer.Name);
-			if (GameManager.Players.ContainsKey(myId))
+			long localViewerId = Multiplayer.GetUniqueId();
+
+			if (GameManager.Players.ContainsKey(myId) && GameManager.Players.ContainsKey(localViewerId))
 			{
 				int myTeam = GameManager.Players[myId].Team;
-				Color teamColor = myTeam == 0 ? Colors.Blue : Colors.Red; 
+				int localViewerTeam = GameManager.Players[localViewerId].Team;
+				
+				Color teamColor = (myTeam == localViewerTeam) ? Colors.Blue : Colors.Red;
 				corpse.SetColor(teamColor);
 			}
 
